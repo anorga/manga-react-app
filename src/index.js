@@ -19,6 +19,7 @@ ReactDOM.render(
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />
+        <indexRedirect to="/" component={Home} />
         <Route exact path="/attack" component={Attack} />
 
       </Switch>
