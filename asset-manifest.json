@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/manga-react-app/static/css/main.a617e044.chunk.css",
-    "main.js": "/manga-react-app/static/js/main.5ef19392.chunk.js",
-    "main.js.map": "/manga-react-app/static/js/main.5ef19392.chunk.js.map",
+    "main.js": "/manga-react-app/static/js/main.6cf07402.chunk.js",
+    "main.js.map": "/manga-react-app/static/js/main.6cf07402.chunk.js.map",
     "runtime-main.js": "/manga-react-app/static/js/runtime-main.ec628909.js",
     "runtime-main.js.map": "/manga-react-app/static/js/runtime-main.ec628909.js.map",
     "static/css/2.818011ed.chunk.css": "/manga-react-app/static/css/2.818011ed.chunk.css",
@@ -14,7 +14,7 @@
     "static/css/2.818011ed.chunk.css.map": "/manga-react-app/static/css/2.818011ed.chunk.css.map",
     "static/css/main.a617e044.chunk.css.map": "/manga-react-app/static/css/main.a617e044.chunk.css.map",
     "static/js/2.27f81cd6.chunk.js.LICENSE.txt": "/manga-react-app/static/js/2.27f81cd6.chunk.js.LICENSE.txt",
-    "static/media/attack.c8a84fa9.png": "/manga-react-app/static/media/attack.c8a84fa9.png",
+    "static/media/attack.54ce81d6.png": "/manga-react-app/static/media/attack.54ce81d6.png",
     "static/media/chainsaw.bf88c17c.jpeg": "/manga-react-app/static/media/chainsaw.bf88c17c.jpeg",
     "static/media/jjk.f7a2983a.jpg": "/manga-react-app/static/media/jjk.f7a2983a.jpg",
     "static/media/rengoku.a782924e.webp": "/manga-react-app/static/media/rengoku.a782924e.webp"
@@ -24,6 +24,6 @@
     "static/css/2.818011ed.chunk.css",
     "static/js/2.27f81cd6.chunk.js",
     "static/css/main.a617e044.chunk.css",
-    "static/js/main.5ef19392.chunk.js"
+    "static/js/main.6cf07402.chunk.js"
   ]
 }
