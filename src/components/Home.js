@@ -7,7 +7,7 @@ function Home() {
             {/* Card One */}
             <div className="card mb-3" >
                 <div className="row g-0">
-                    <div className="col">
+                    <div className="col" style={{width:269}}>
                         <img src="images/attack.png" className="img-fluid rounded-start" alt="Attack on Titan Manga Cover" style={{ width: 269, height: 300 }} />
                     </div>
                     <div className="col">
