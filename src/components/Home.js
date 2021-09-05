@@ -1,14 +1,17 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
+import attack from './assets/attack.png';
+import chainsaw from './assets/chainsaw.jpeg';
+import jjk from './assets/jjk.jpg';
 
 function Home() {
     return (
         <Container style={{ textAlign: 'left' }}>
             {/* Card One */}
-            <div className="card mb-3" >
+            <div className="card mb-3" style={{ marginTop: 20 }}>
                 <div className="row g-0">
-                    <div className="col" style={{width:269}}>
-                        <img src="images/attack.png" className="img-fluid rounded-start" alt="Attack on Titan Manga Cover" style={{ width: 269, height: 300 }} />
+                    <div className="col">
+                        <img src={attack} className="img-fluid rounded-start" alt="Attack on Titan Manga Cover" style={{ width: 269, height: 300 }} />
                     </div>
                     <div className="col">
                         <div className="card-body">
@@ -19,10 +22,10 @@ function Home() {
                 </div>
             </div>
             {/* Card Two */}
-            <div className="card mb-3" style={{ maxWidth: '540px' }}>
+            <div className="card mb-3">
                 <div className="row g-0">
                     <div className="col">
-                        <img src="images/chainsaw.jpeg" className="img-fluid rounded-start" alt="Chainsaw Man Manga Cover" style={{ width: 269, height: 300 }} />
+                        <img src={chainsaw} className="img-fluid rounded-start" alt="Chainsaw Man Manga Cover" style={{ width: 269, height: 300 }} />
                     </div>
                     <div className="col">
                         <div className="card-body">
@@ -33,10 +36,10 @@ function Home() {
                 </div>
             </div>
             {/* Card Three */}
-            <div className="card mb-3" style={{ maxWidth: '540px' }}>
+            <div className="card mb-3">
                 <div className="row g-0">
                     <div className="col">
-                        <img src="images/jjk.jpg" className="img-fluid rounded-start" alt="Jujutsu Kaisen Manga Cover" />
+                        <img src={jjk} className="img-fluid rounded-start" alt="Jujutsu Kaisen Manga Cover" style={{ width: 269, height: 300 }} />
                     </div>
                     <div className="col">
                         <div className="card-body">

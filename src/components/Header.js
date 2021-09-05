@@ -1,11 +1,12 @@
 import React from "react";
+import rengoku from "./assets/rengoku.webp"
 
 function Header() {
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
                 <a className="navbar-brand" href="index.html">
-                    <img src="images/rengoku.webp" alt="" width={50} height={44} />
+                    <img src={rengoku} alt="" width={50} height={44} />
                 </a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon" />
