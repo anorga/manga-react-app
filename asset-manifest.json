@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/manga-react-app/static/css/main.1a89fbdf.chunk.css",
-    "main.js": "/manga-react-app/static/js/main.86aa46c0.chunk.js",
-    "main.js.map": "/manga-react-app/static/js/main.86aa46c0.chunk.js.map",
+    "main.js": "/manga-react-app/static/js/main.77fd6dc2.chunk.js",
+    "main.js.map": "/manga-react-app/static/js/main.77fd6dc2.chunk.js.map",
     "runtime-main.js": "/manga-react-app/static/js/runtime-main.1745e03e.js",
     "runtime-main.js.map": "/manga-react-app/static/js/runtime-main.1745e03e.js.map",
     "static/css/2.818011ed.chunk.css": "/manga-react-app/static/css/2.818011ed.chunk.css",
-    "static/js/2.958650ab.chunk.js": "/manga-react-app/static/js/2.958650ab.chunk.js",
-    "static/js/2.958650ab.chunk.js.map": "/manga-react-app/static/js/2.958650ab.chunk.js.map",
+    "static/js/2.f0a79d03.chunk.js": "/manga-react-app/static/js/2.f0a79d03.chunk.js",
+    "static/js/2.f0a79d03.chunk.js.map": "/manga-react-app/static/js/2.f0a79d03.chunk.js.map",
     "static/js/3.83a33542.chunk.js": "/manga-react-app/static/js/3.83a33542.chunk.js",
     "static/js/3.83a33542.chunk.js.map": "/manga-react-app/static/js/3.83a33542.chunk.js.map",
     "index.html": "/manga-react-app/index.html",
     "static/css/2.818011ed.chunk.css.map": "/manga-react-app/static/css/2.818011ed.chunk.css.map",
     "static/css/main.1a89fbdf.chunk.css.map": "/manga-react-app/static/css/main.1a89fbdf.chunk.css.map",
-    "static/js/2.958650ab.chunk.js.LICENSE.txt": "/manga-react-app/static/js/2.958650ab.chunk.js.LICENSE.txt",
+    "static/js/2.f0a79d03.chunk.js.LICENSE.txt": "/manga-react-app/static/js/2.f0a79d03.chunk.js.LICENSE.txt",
     "static/media/attack.54ce81d6.png": "/manga-react-app/static/media/attack.54ce81d6.png",
     "static/media/chainsaw.bf88c17c.jpeg": "/manga-react-app/static/media/chainsaw.bf88c17c.jpeg",
     "static/media/github.5994b25b.png": "/manga-react-app/static/media/github.5994b25b.png",
@@ -23,8 +23,8 @@
   "entrypoints": [
     "static/js/runtime-main.1745e03e.js",
     "static/css/2.818011ed.chunk.css",
-    "static/js/2.958650ab.chunk.js",
+    "static/js/2.f0a79d03.chunk.js",
     "static/css/main.1a89fbdf.chunk.css",
-    "static/js/main.86aa46c0.chunk.js"
+    "static/js/main.77fd6dc2.chunk.js"
   ]
 }
