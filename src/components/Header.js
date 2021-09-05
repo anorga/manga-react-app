@@ -7,7 +7,7 @@ import Container from 'react-bootstrap/Container';
 
 function Header() {
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar sticky="top" bg="light" expand="lg">
             <Container>
                 <Navbar.Brand href="#home">
                     <img
