@@ -7,7 +7,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  // Redirect
 } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -21,9 +21,9 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/attack" component={Attack} />
-        <Route path="*">
+        {/* <Route path="*">
           <Redirect to="/" />
-        </Route>
+        </Route> */}
 
       </Switch>
       <Footer />
