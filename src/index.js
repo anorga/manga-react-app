@@ -6,7 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -19,8 +20,10 @@ ReactDOM.render(
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />
-        <indexRedirect to="/" component={Home} />
         <Route exact path="/attack" component={Attack} />
+        <Route path="*">
+          <Redirect to="/" />
+        </Route>
 
       </Switch>
       <Footer />
