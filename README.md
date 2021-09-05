@@ -1,6 +1,14 @@
-# Getting Started with Create React App
+# Read Manga Online
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Simple static single-page web application for manga enthusiasts.
+
+This application aggregates links to read popular manga.
+
+Best viewed as a mobile web application. 
+
+Hosted on GitHub pages:
+
+https://anorga.github.io/manga-react-app/
 
 ## Available Scripts
 

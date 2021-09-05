@@ -13,6 +13,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './components/Home';
 import Attack from './components/Attack';
+import Chainsaw from './components/Chainsaw';
+import Jujutsu from './components/Jujutsu';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -21,6 +23,8 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/attack" component={Attack} />
+        <Route exact path="/chainsaw" component={Chainsaw} />
+        <Route exact path="/jujutsu" component={Jujutsu} />
         <Route path="*">
           <Redirect to="/" />
         </Route>
