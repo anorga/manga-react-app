@@ -22,7 +22,7 @@ function Home() {
                 </div>
             </div>
             {/* Card Two */}
-            <div className="card mb-3" style={{ marginTop: 20, maxWidth:800 }}>
+            <div className="card mb-3" style={{ maxWidth:800 }}>
                 <div className="row g-0">
                     <div className="col" style={{ textAlign:'left' }}>
                         <img src={chainsaw} className="img-fluid rounded-start" alt="Chainsaw Man Manga Cover" style={{ width: 269, height: 300 }} />
@@ -36,7 +36,7 @@ function Home() {
                 </div>
             </div>
             {/* Card Three */}
-            <div className="card mb-3" style={{ marginTop: 20, maxWidth:800 }}>
+            <div className="card mb-3" style={{ maxWidth:800 }}>
                 <div className="row g-0">
                     <div className="col" style={{ textAlign:'left' }}>
                         <img src={jjk} className="img-fluid rounded-start" alt="Jujutsu Kaisen Manga Cover" style={{ width: 269, height: 300 }} />
@@ -44,7 +44,7 @@ function Home() {
                     <div className="col" style={{ paddingRight:50}}>
                         <div className="card-body">
                             <h5 className="card-title">Jujutsu Kaisen</h5>
-                            <p className="card-text">Set in a world where Cursed Spirits feed on unsuspecting humans and fragments of the legendary and feared demon Ryomen Sukuna have been lost and scattered about.</p>
+                            <p className="card-text">Set in a world where Cursed Spirits feed on unsuspecting humans and fragments of the demon Ryomen Sukuna have been lost and scattered about.</p>
                         </div>
                     </div>
                 </div>
