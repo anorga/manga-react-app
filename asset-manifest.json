@@ -1,29 +1,30 @@
 {
   "files": {
     "main.css": "/manga-react-app/static/css/main.a617e044.chunk.css",
-    "main.js": "/manga-react-app/static/js/main.90ef3a16.chunk.js",
-    "main.js.map": "/manga-react-app/static/js/main.90ef3a16.chunk.js.map",
-    "runtime-main.js": "/manga-react-app/static/js/runtime-main.ec628909.js",
-    "runtime-main.js.map": "/manga-react-app/static/js/runtime-main.ec628909.js.map",
+    "main.js": "/manga-react-app/static/js/main.a5c3505a.chunk.js",
+    "main.js.map": "/manga-react-app/static/js/main.a5c3505a.chunk.js.map",
+    "runtime-main.js": "/manga-react-app/static/js/runtime-main.0f849b1d.js",
+    "runtime-main.js.map": "/manga-react-app/static/js/runtime-main.0f849b1d.js.map",
     "static/css/2.818011ed.chunk.css": "/manga-react-app/static/css/2.818011ed.chunk.css",
-    "static/js/2.27f81cd6.chunk.js": "/manga-react-app/static/js/2.27f81cd6.chunk.js",
-    "static/js/2.27f81cd6.chunk.js.map": "/manga-react-app/static/js/2.27f81cd6.chunk.js.map",
-    "static/js/3.84b240e1.chunk.js": "/manga-react-app/static/js/3.84b240e1.chunk.js",
-    "static/js/3.84b240e1.chunk.js.map": "/manga-react-app/static/js/3.84b240e1.chunk.js.map",
+    "static/js/2.d4ca3ab3.chunk.js": "/manga-react-app/static/js/2.d4ca3ab3.chunk.js",
+    "static/js/2.d4ca3ab3.chunk.js.map": "/manga-react-app/static/js/2.d4ca3ab3.chunk.js.map",
+    "static/js/3.f257553c.chunk.js": "/manga-react-app/static/js/3.f257553c.chunk.js",
+    "static/js/3.f257553c.chunk.js.map": "/manga-react-app/static/js/3.f257553c.chunk.js.map",
     "index.html": "/manga-react-app/index.html",
     "static/css/2.818011ed.chunk.css.map": "/manga-react-app/static/css/2.818011ed.chunk.css.map",
     "static/css/main.a617e044.chunk.css.map": "/manga-react-app/static/css/main.a617e044.chunk.css.map",
-    "static/js/2.27f81cd6.chunk.js.LICENSE.txt": "/manga-react-app/static/js/2.27f81cd6.chunk.js.LICENSE.txt",
+    "static/js/2.d4ca3ab3.chunk.js.LICENSE.txt": "/manga-react-app/static/js/2.d4ca3ab3.chunk.js.LICENSE.txt",
     "static/media/attack.54ce81d6.png": "/manga-react-app/static/media/attack.54ce81d6.png",
     "static/media/chainsaw.bf88c17c.jpeg": "/manga-react-app/static/media/chainsaw.bf88c17c.jpeg",
+    "static/media/github.5994b25b.png": "/manga-react-app/static/media/github.5994b25b.png",
     "static/media/jjk.f7a2983a.jpg": "/manga-react-app/static/media/jjk.f7a2983a.jpg",
     "static/media/rengoku.a782924e.webp": "/manga-react-app/static/media/rengoku.a782924e.webp"
   },
   "entrypoints": [
-    "static/js/runtime-main.ec628909.js",
+    "static/js/runtime-main.0f849b1d.js",
     "static/css/2.818011ed.chunk.css",
-    "static/js/2.27f81cd6.chunk.js",
+    "static/js/2.d4ca3ab3.chunk.js",
     "static/css/main.a617e044.chunk.css",
-    "static/js/main.90ef3a16.chunk.js"
+    "static/js/main.a5c3505a.chunk.js"
   ]
 }
