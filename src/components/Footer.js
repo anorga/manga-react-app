@@ -4,7 +4,7 @@ import github from './assets/github.png';
 
 function Footer() {
     return (
-        <Container style={{ textAlign: "left" }}>
+        <Container style={{ textAlign: "left", marginTop: 20 }}>
             <a href = "https://github.com/anorga">
                 <img
                 src={github}

@@ -3,8 +3,8 @@ import Container from 'react-bootstrap/Container';
 
 function Attack() {
     return(
-        <Container fluid>
-        <ul className="list-group">
+        <Container>
+        <ul className="list-group" style={{ marginTop: 20 }}>
         <li className="list-group-item">Chapter 117<span style={{float: 'right'}} className="badge rounded-pill bg-primary"><a href="https://readaot.com/manga/shingeki-no-kyojin-chapter-117/">Read</a></span></li>
         <li className="list-group-item">Chapter 118<span style={{float: 'right'}} className="badge rounded-pill bg-primary"><a href="https://readaot.com/manga/shingeki-no-kyojin-chapter-118/">Read</a></span></li>
         <li className="list-group-item">Chapter 119<span style={{float: 'right'}} className="badge rounded-pill bg-primary"><a href="https://readaot.com/manga/shingeki-no-kyojin-chapter-119/">Read</a></span></li>

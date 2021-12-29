@@ -3,8 +3,8 @@ import Container from 'react-bootstrap/Container';
 
 function Chainsaw() {
     return (
-        <Container fluid>
-            <ul className="list-group">
+        <Container>
+            <ul className="list-group" style={{ marginTop: 20 }}>
                 <li className="list-group-item">Chapter 1<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://w16.read-chainsawman.com/manga/chainsaw-man-chapter-1/">Read</a></span></li>
                 <li className="list-group-item">Chapter 2<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://w16.read-chainsawman.com/manga/chainsaw-man-chapter-2/">Read</a></span></li>
                 <li className="list-group-item">Chapter 3<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://w16.read-chainsawman.com/manga/chainsaw-man-chapter-3/">Read</a></span></li>
