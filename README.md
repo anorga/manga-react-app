@@ -4,7 +4,7 @@ Simple static single-page web application for manga enthusiasts.
 
 This application aggregates links to read popular manga.
 
-Best viewed as a mobile web application. 
+Links will be constantly updated, some might not be up-to-date. 
 
 Hosted on GitHub pages:
 

@@ -5,13 +5,15 @@ import github from './assets/github.png';
 function Footer() {
     return (
         <Container style={{ textAlign: "left" }}>
-            <img
+            <a href = "https://github.com/anorga">
+                <img
                 src={github}
                 width="44"
                 height="44"
                 className="d-inline-block"
                 alt="React Bootstrap logo"
-            />{' '}Created by: Chris
+            />
+            </a>{' '}Created by: Chris
         </Container>
 
     );

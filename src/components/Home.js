@@ -4,6 +4,7 @@ import attack from './assets/attack.png';
 import chainsaw from './assets/chainsaw.jpeg';
 import jjk from './assets/jjk.jpg';
 import { LinkContainer } from "react-router-bootstrap";
+import Helmet from "react-helmet";
 
 function Home() {
     return (
