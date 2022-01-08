@@ -8,22 +8,22 @@ import { LinkContainer } from "react-router-bootstrap";
 
 function Header() {
     return (
-        <Navbar sticky="top" bg="light" expand="lg">
+        <Navbar sticky="top" bg="dark" variant="dark" expand="lg">
             <Container>
-                <LinkContainer to="/">
-                    <Navbar.Brand>
+            <LinkContainer to="/">
+                    <Navbar.Brand className="m-auto">
                         <img
                             src={rengoku}
                             width="50"
                             height="44"
                             className="d-inline-block"
-                            alt="React Bootstrap logo"
-                        />{' '} Read Manga
+                            alt="Read Manga Online Logo"
+                            style= {{ marginRight: 15, borderRadius: 4 }}
+                        />
                     </Navbar.Brand>
                 </LinkContainer>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
+                    <Nav>
                         <LinkContainer to="/"><Nav.Link>Home</Nav.Link></LinkContainer>
                         <NavDropdown title="Manga List" id="basic-nav-dropdown">
                             <LinkContainer to="/attack"><NavDropdown.Item>Attack on Titan</NavDropdown.Item></LinkContainer>
@@ -32,6 +32,7 @@ function Header() {
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
+                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             </Container>
         </Navbar>
     );
