@@ -1,9 +1,11 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
+import attackBanner from './assets/attackBanner.jpg';
 
 function Attack() {
     return(
         <Container>
+        <img src={attackBanner} className="img-fluid" alt="Attack on Titan banner" />
         <ul className="list-group" style={{ marginTop: 20 }}>
         <li className="list-group-item">Chapter 117<span style={{float: 'right'}} className="badge rounded-pill bg-primary"><a href="https://readaot.com/manga/shingeki-no-kyojin-chapter-117/">Read</a></span></li>
         <li className="list-group-item">Chapter 118<span style={{float: 'right'}} className="badge rounded-pill bg-primary"><a href="https://readaot.com/manga/shingeki-no-kyojin-chapter-118/">Read</a></span></li>
