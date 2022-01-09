@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/manga-react-app/static/css/main.b91800e5.chunk.css",
-    "main.js": "/manga-react-app/static/js/main.b34e35ad.chunk.js",
-    "main.js.map": "/manga-react-app/static/js/main.b34e35ad.chunk.js.map",
+    "main.css": "/manga-react-app/static/css/main.6efd812d.chunk.css",
+    "main.js": "/manga-react-app/static/js/main.1a9a9265.chunk.js",
+    "main.js.map": "/manga-react-app/static/js/main.1a9a9265.chunk.js.map",
     "runtime-main.js": "/manga-react-app/static/js/runtime-main.1745e03e.js",
     "runtime-main.js.map": "/manga-react-app/static/js/runtime-main.1745e03e.js.map",
     "static/css/2.818011ed.chunk.css": "/manga-react-app/static/css/2.818011ed.chunk.css",
@@ -12,20 +12,22 @@
     "static/js/3.83a33542.chunk.js.map": "/manga-react-app/static/js/3.83a33542.chunk.js.map",
     "index.html": "/manga-react-app/index.html",
     "static/css/2.818011ed.chunk.css.map": "/manga-react-app/static/css/2.818011ed.chunk.css.map",
-    "static/css/main.b91800e5.chunk.css.map": "/manga-react-app/static/css/main.b91800e5.chunk.css.map",
+    "static/css/main.6efd812d.chunk.css.map": "/manga-react-app/static/css/main.6efd812d.chunk.css.map",
     "static/js/2.3f085aef.chunk.js.LICENSE.txt": "/manga-react-app/static/js/2.3f085aef.chunk.js.LICENSE.txt",
     "static/media/attack.bfda02fa.png": "/manga-react-app/static/media/attack.bfda02fa.png",
     "static/media/attackBanner.60c6fa92.jpg": "/manga-react-app/static/media/attackBanner.60c6fa92.jpg",
     "static/media/chainsaw.bf88c17c.jpeg": "/manga-react-app/static/media/chainsaw.bf88c17c.jpeg",
+    "static/media/chainsawBanner.a38542d7.jpeg": "/manga-react-app/static/media/chainsawBanner.a38542d7.jpeg",
     "static/media/github.5994b25b.png": "/manga-react-app/static/media/github.5994b25b.png",
     "static/media/jjk.fc2313f3.jpg": "/manga-react-app/static/media/jjk.fc2313f3.jpg",
+    "static/media/jujutsuBanner.74ff6a88.jpeg": "/manga-react-app/static/media/jujutsuBanner.74ff6a88.jpeg",
     "static/media/rengoku.a782924e.webp": "/manga-react-app/static/media/rengoku.a782924e.webp"
   },
   "entrypoints": [
     "static/js/runtime-main.1745e03e.js",
     "static/css/2.818011ed.chunk.css",
     "static/js/2.3f085aef.chunk.js",
-    "static/css/main.b91800e5.chunk.css",
-    "static/js/main.b34e35ad.chunk.js"
+    "static/css/main.6efd812d.chunk.css",
+    "static/js/main.1a9a9265.chunk.js"
   ]
 }
