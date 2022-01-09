@@ -6,9 +6,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* background: rgb(174,179,155);
-  background: radial-gradient(circle, rgba(174,179,155,1) 0%, rgba(255,255,255,1) 50%); */
-  background: rgb(174,179,155);
-  background: radial-gradient(circle, rgba(174,179,155,1) 26%, rgba(255,255,255,1) 80%);
+  background: radial-gradient(circle, rgba(174,179,155,1) 26%, rgba(255,255,255,1) 80%); */
+  background: rgb(255,255,255);
+  background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(241,240,229,1) 50%, rgba(255,255,255,1) 100%);
 }
 
 code {
@@ -58,4 +58,10 @@ li {
 
 .chainsawImg {
   width: 100%;
+}
+
+#animeBanner {
+  border-radius: 4;
+  width: 100%;
+  height: 130px;
 }

@@ -5,7 +5,7 @@ import jujutsuBanner from './assets/jujutsuBanner.jpeg';
 function Jujutsu() {
     return (
         <Container>
-            <img src={jujutsuBanner} className="img-fluid chainsawImg" alt="Chainsaw Man banner" style={{ borderRadius: 4 }} />
+            <img src={jujutsuBanner} className="img-fluid chainsawImg" alt="Jujutsu banner" style={{ borderRadius: 4 }} />
             <ul className="list-group" style={{ marginTop: 10 }}>
                 <li className="list-group-item">Chapter 1<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://jujutsukaisen.online/manga/jujutsu-kaisen-manga-chapter-1/">Read</a></span></li>
                 <li className="list-group-item">Chapter 2<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://jujutsukaisen.online/manga/jujutsu-kaisen-manga-chapter-2/">Read</a></span></li>

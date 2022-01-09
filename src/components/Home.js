@@ -4,11 +4,13 @@ import attack from './assets/attack.png';
 import chainsaw from './assets/chainsaw.jpeg';
 import jjk from './assets/jjk.jpg';
 import { LinkContainer } from "react-router-bootstrap";
+import animeBanner from './assets/animeBanner.jpg';
 // import Helmet from "react-helmet";
 
 function Home() {
     return (
         <Container>
+            <img src={animeBanner} className="img-fluid" id="animeBanner" alt="Berserk banner"/>
             <ul className="list-group list-main">
                 {/* Card One */}
                 <li className="list-group-item manga-li" >
