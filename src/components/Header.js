@@ -19,7 +19,7 @@ function Header() {
                             className="d-inline-block"
                             alt="Read Manga Online Logo"
                             style= {{ marginRight: 15, borderRadius: 4 }}
-                        />
+                        />{" "} <span className="d-inline d-sm-none">Read Manga</span>
                     </Navbar.Brand>
                 </LinkContainer>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>

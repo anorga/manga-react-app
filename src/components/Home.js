@@ -20,7 +20,7 @@ function Home() {
                     <LinkContainer to="/attack" style={{ paddingRight: 50 }}>
                         <div className="col">
                             <div className="card-body">
-                                <h5 className="card-title" style={{ paddingTop: 10 }}>Attack on Titan</h5>
+                                <h5 className="card-title" style={{ paddingTop: 5 }}>Attack on Titan</h5>
                                 <p className="card-text">After his hometown is destroyed and his mother is killed, Eren Jaeger vows to cleanse the earth of the giant humanoid Titans that have brought humanity to the brink of extinction.</p>
                             </div>
                         </div>
@@ -38,7 +38,7 @@ function Home() {
                     <LinkContainer to="/chainsaw" style={{ paddingRight: 50 }}>
                         <div className="col">
                             <div className="card-body">
-                                <h5 className="card-title" style={{ paddingTop: 10 }}>Chainsaw Man</h5>
+                                <h5 className="card-title" style={{ paddingTop: 5 }}>Chainsaw Man</h5>
                                 <p className="card-text">When his father died, Denji was stuck with a huge debt. Thanks to a Devil dog he saved named Pochita, he's able to survive through odd jobs and killing Devils for the Yakuza.</p>
                             </div>
                         </div>
@@ -56,7 +56,7 @@ function Home() {
                     <LinkContainer to="/jujutsu" style={{ paddingRight: 50 }}>
                         <div className="col">
                             <div className="card-body">
-                                <h5 className="card-title" style={{ paddingTop: 10 }}>Jujutsu Kaisen</h5>
+                                <h5 className="card-title" style={{ paddingTop: 5 }}>Jujutsu Kaisen</h5>
                                 <p className="card-text">Set in a world where Cursed Spirits feed on unsuspecting humans and fragments of the demon Ryomen Sukuna have been lost and scattered about.</p>
                             </div>
                         </div>
