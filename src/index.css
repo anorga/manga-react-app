@@ -5,8 +5,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* background: rgb(174,179,155);
+  background: radial-gradient(circle, rgba(174,179,155,1) 0%, rgba(255,255,255,1) 50%); */
   background: rgb(174,179,155);
-  background: radial-gradient(circle, rgba(174,179,155,1) 0%, rgba(255,255,255,1) 50%);
+  background: radial-gradient(circle, rgba(174,179,155,1) 26%, rgba(255,255,255,1) 80%);
 }
 
 code {
@@ -47,8 +49,13 @@ li {
   /* max-height: 290px; */
   max-height: 180px;
   border-radius: 3px;
+  opacity: 1;
 }
 
 .card-text {
   padding-top: 10px;
+}
+
+.chainsawImg {
+  width: 100%;
 }
