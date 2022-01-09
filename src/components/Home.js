@@ -14,7 +14,7 @@ function Home() {
                 <div className="row g-0">
                     <LinkContainer to="/attack">
                         <div className="col" style={{ textAlign: 'left' }}>
-                            <img src={attack} className="img-fluid rounded-start" alt="Attack on Titan Manga Cover" style={{ width: 269, height: 300 }} />
+                            <img src={attack} id="attack" className="img-fluid rounded-start" alt="Attack on Titan Manga Cover" style={{ width: 269 }} />
                         </div>
                     </LinkContainer>
                     <LinkContainer to="/attack" style={{ paddingRight: 50 }}>

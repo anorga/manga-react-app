@@ -11,7 +11,7 @@ function Header() {
         <Navbar sticky="top" bg="dark" variant="dark" expand="lg">
             <Container>
             <LinkContainer to="/">
-                    <Navbar.Brand>
+                    <Navbar.Brand className="m-auto">
                         <img
                             src={rengoku}
                             width="50"
@@ -26,7 +26,7 @@ function Header() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <LinkContainer to="/"><Nav.Link>Home</Nav.Link></LinkContainer>
-                        <NavDropdown title="Manga List" id="basic-nav-dropdown">
+                        <NavDropdown title="Manga List" id="basic-nav-dropdown" menuVariant="dark">
                             <LinkContainer to="/attack"><NavDropdown.Item>Attack on Titan</NavDropdown.Item></LinkContainer>
                             <LinkContainer to="/chainsaw"><NavDropdown.Item>Chainsaw Man</NavDropdown.Item></LinkContainer>
                             <LinkContainer to="/jujutsu"><NavDropdown.Item>Jujutsu Kaisen</NavDropdown.Item></LinkContainer>

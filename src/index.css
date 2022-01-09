@@ -26,3 +26,7 @@ li {
 .card {
   cursor: pointer;
 }
+
+#attack {
+  height: 100%;
+}
