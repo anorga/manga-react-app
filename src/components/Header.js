@@ -11,7 +11,7 @@ function Header() {
         <Navbar sticky="top" bg="dark" variant="dark" expand="lg">
             <Container>
             <LinkContainer to="/">
-                    <Navbar.Brand className="m-auto">
+                    <Navbar.Brand>
                         <img
                             src={rengoku}
                             width="50"
