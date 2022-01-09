@@ -11,7 +11,7 @@ function Header() {
         <Navbar sticky="top" bg="dark" variant="dark" expand="lg">
             <Container>
             <LinkContainer to="/">
-                    <Navbar.Brand className="m-auto">
+                    <Navbar.Brand>
                         <img
                             src={rengoku}
                             width="50"
@@ -22,8 +22,9 @@ function Header() {
                         />
                     </Navbar.Brand>
                 </LinkContainer>
+                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav>
+                    <Nav className="me-auto">
                         <LinkContainer to="/"><Nav.Link>Home</Nav.Link></LinkContainer>
                         <NavDropdown title="Manga List" id="basic-nav-dropdown">
                             <LinkContainer to="/attack"><NavDropdown.Item>Attack on Titan</NavDropdown.Item></LinkContainer>
@@ -32,7 +33,6 @@ function Header() {
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
-                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             </Container>
         </Navbar>
     );

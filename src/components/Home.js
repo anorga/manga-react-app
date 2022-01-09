@@ -20,7 +20,7 @@ function Home() {
                     <LinkContainer to="/attack" style={{ paddingRight: 50 }}>
                         <div className="col">
                             <div className="card-body">
-                                <h5 className="card-title" style={{ marginTop: 10, marginBottom: 20 }}>Attack on Titan</h5>
+                                <h5 className="card-title" style={{ paddingTop: 10, paddingBottom: 20 }}>Attack on Titan</h5>
                                 <p className="card-text">After his hometown is destroyed and his mother is killed, Eren Jaeger vows to cleanse the earth of the giant humanoid Titans that have brought humanity to the brink of extinction.</p>
                             </div>
                         </div>
