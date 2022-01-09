@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/manga-react-app/static/css/main.16426463.chunk.css",
-    "main.js": "/manga-react-app/static/js/main.2a0fd53c.chunk.js",
-    "main.js.map": "/manga-react-app/static/js/main.2a0fd53c.chunk.js.map",
+    "main.js": "/manga-react-app/static/js/main.1223ca3b.chunk.js",
+    "main.js.map": "/manga-react-app/static/js/main.1223ca3b.chunk.js.map",
     "runtime-main.js": "/manga-react-app/static/js/runtime-main.1745e03e.js",
     "runtime-main.js.map": "/manga-react-app/static/js/runtime-main.1745e03e.js.map",
     "static/css/2.818011ed.chunk.css": "/manga-react-app/static/css/2.818011ed.chunk.css",
@@ -25,6 +25,6 @@
     "static/css/2.818011ed.chunk.css",
     "static/js/2.6035e094.chunk.js",
     "static/css/main.16426463.chunk.css",
-    "static/js/main.2a0fd53c.chunk.js"
+    "static/js/main.1223ca3b.chunk.js"
   ]
 }
