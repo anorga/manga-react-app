@@ -42,7 +42,7 @@ li {
 .homeImage {
   max-width: 269px;
   /* max-height: 290px; */
-  max-height: 180px;
+  max-height: 200px;
   border-radius: 3px;
   opacity: 1;
 }
