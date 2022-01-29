@@ -2,13 +2,13 @@
 
 Simple static single-page web application for manga enthusiasts. Best viewed on mobile.
 
-This application aggregates links to read popular manga.
+This application aggregates external links to read popular manga.
 
 Links will be constantly updated, some might not be up-to-date. 
 
-Hosted on GitHub pages:
+Hosted on:
 
-https://anorga.github.io/manga-react-app/
+https://readmangas.xyz/
 
 ## Available Scripts
 
