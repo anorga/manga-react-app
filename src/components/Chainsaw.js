@@ -2,6 +2,8 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import chainsawBanner from './assets/chainsawBanner.jpeg';
 
+// Links need to be updated for Chainsaw
+
 function Chainsaw() {
     return (
         <Container>
