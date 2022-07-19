@@ -1,6 +1,6 @@
 # Read Manga Online
 
-Simple static single-page web application for manga enthusiasts. Best viewed on mobile.
+React application for manga enthusiasts. Best viewed on mobile.
 
 This application aggregates external links to read popular manga.
 
