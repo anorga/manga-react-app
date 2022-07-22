@@ -14,6 +14,8 @@ Hosted on:
 
 https://readmangas.xyz/
 
+<img width="1334" alt="readmangas xyz" src="https://user-images.githubusercontent.com/16889754/180376972-292b67a9-f202-4fbd-976f-4d5f5142d6d4.png">
+
 ## Available Scripts
 
 In the project directory, you can run:
