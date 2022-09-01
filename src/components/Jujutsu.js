@@ -6,6 +6,12 @@ function Jujutsu() {
     return (
         <Container>
             <img src={jujutsuBanner} className="img-fluid chainsawImg" alt="Jujutsu banner" style={{ borderRadius: 4 }} />
+
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            
             <ul className="list-group" style={{ marginTop: 10 }}>
                 <li className="list-group-item list-group-item-action">Chapter 1<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://w3.readjujutsu.com/manga/jujutsukaisen-chapter-1-2-1-ryomen-sukuna/">Read</a></span></li>
                 <li className="list-group-item list-group-item-action">Chapter 2<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://w3.readjujutsu.com/manga/jujutsukaisen-chapter-1-2-2-secret-execution/">Read</a></span></li>
