@@ -10,14 +10,14 @@ import Jujutsu from './components/Jujutsu';
 function App() {
   return (
     <>
-      {/* <Header /> */}
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/attack" element={<Attack />} />
         <Route path="/chainsaw" element={<Chainsaw />} />
         <Route path="/jujutsu" element={<Jujutsu />} />
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }
