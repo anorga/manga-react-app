@@ -9,7 +9,7 @@ function Chainsaw() {
         <Container>
             <img src={chainsawBanner} className="img-fluid chainsawImg" alt="Chainsaw Man banner" style={{ borderRadius: 4 }} />
             <ul className="list-group" style={{ marginTop: 10 }}>
-                <li className="list-group-item">Chapter 1<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://w16.read-chainsawman.com/manga/chainsaw-man-chapter-1/">Read</a></span></li>
+                <li className="list-group-item">Chapter 1<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://chainsaw-man-mangas.com/manga/chainsaw-man-chapter-1/">Read</a></span></li>
                 <li className="list-group-item">Chapter 2<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://w16.read-chainsawman.com/manga/chainsaw-man-chapter-2/">Read</a></span></li>
                 <li className="list-group-item">Chapter 3<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://w16.read-chainsawman.com/manga/chainsaw-man-chapter-3/">Read</a></span></li>
                 <li className="list-group-item">Chapter 4<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://w16.read-chainsawman.com/manga/chainsaw-man-chapter-4/">Read</a></span></li>
