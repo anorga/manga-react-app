@@ -28,10 +28,10 @@ function Jujutsu() {
                 <li className="list-group-item">Chapter 19<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://w3.readjujutsu.com/manga/jujutsukaisen-chapter-1-2-19/">Read</a></span></li>
                 <li className="list-group-item">Chapter 20<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://w3.readjujutsu.com/manga/jujutsukaisen-chapter-1-2-20-small-fry-and-reverse-retribution-2/">Read</a></span></li>
                 <li className="list-group-item">Chapter 21<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://w3.readjujutsu.com/manga/jujutsukaisen-chapter-1-2-21-small-fry-and-reverse-retribution-3/">Read</a></span></li>
-                <li className="list-group-item">Chapter 22<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://w3.readjujutsu.com/manga/jujutsukaisen-chapter-1-2-23-small-fry-and-reverse-retribution-v/">Read</a></span></li>
-                <li className="list-group-item">Chapter 23<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://jujutsukaisen.online/manga/jujutsu-kaisen-manga-chapter-23/">Read</a></span></li>
-                <li className="list-group-item">Chapter 24<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://jujutsukaisen.online/manga/jujutsu-kaisen-manga-chapter-24/">Read</a></span></li>
-                <li className="list-group-item">Chapter 25<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://jujutsukaisen.online/manga/jujutsu-kaisen-manga-chapter-25/">Read</a></span></li>
+                <li className="list-group-item">Chapter 22<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://w3.readjujutsu.com/manga/jujutsukaisen-chapter-1-2-22/">Read</a></span></li>
+                <li className="list-group-item">Chapter 23<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://w3.readjujutsu.com/manga/jujutsukaisen-chapter-1-2-23-small-fry-and-reverse-retribution-v/">Read</a></span></li>
+                <li className="list-group-item">Chapter 24<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://w3.readjujutsu.com/manga/jujutsukaisen-chapter-1-2-24-small-fry-and-reverse-retribution-vi/">Read</a></span></li>
+                <li className="list-group-item">Chapter 25<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a href="https://w3.readjujutsu.com/manga/jujutsukaisen-chapter-1-2-25-narrow-minded-foolishness/">Read</a></span></li>
             </ul>
         </Container>
     );
