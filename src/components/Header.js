@@ -27,9 +27,9 @@ function Header() {
                     <Nav>
                         <Link to="/" style={{textDecoration: 'none', color: '#ffffff8c', marginTop: '20px'}}><span className="d-inline d-sm-none">Home</span></Link>
                         <NavDropdown title="Manga List" id="basic-nav-dropdown" menuVariant="dark">
-                            <Link to="/attack"><NavDropdown.Item>Attack on Titan</NavDropdown.Item></Link>
-                            <Link to="/chainsaw"><NavDropdown.Item>Chainsaw Man</NavDropdown.Item></Link>
-                            <Link to="/jujutsu"><NavDropdown.Item>Jujutsu Kaisen</NavDropdown.Item></Link>
+                            <Link to="/attack" style={{display: 'block', textDecoration: 'none', color: '#dee2e6', paddingLeft: '15px'}}>Attack on Titan</Link>
+                            <Link to="/chainsaw" style={{display: 'block', textDecoration: 'none', color: '#dee2e6', paddingLeft: '15px'}}>Chainsaw Man</Link>
+                            <Link to="/jujutsu" style={{display: 'block', textDecoration: 'none', color: '#dee2e6', paddingLeft: '15px'}}>Jujutsu Kaisen</Link>
                         </NavDropdown>
                         <Nav.Link>Log In</Nav.Link>
                     </Nav>
