@@ -12,11 +12,6 @@ code {
     monospace;
 }
 
-a, a:hover {
-  text-decoration: none;
-  color: white;
-}
-
 li {
   padding-right: 40px !important;
 }
@@ -61,4 +56,8 @@ li {
 .mangaNav {
   font-size: 1.2em;
   padding-right: 15px;
+}
+
+.dropdownItem:hover {
+  background-color: rgb(87, 87, 87);
 }
