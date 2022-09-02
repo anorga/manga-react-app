@@ -8,11 +8,9 @@ function AlertDismiss() {
   if (show) {
     return (
       <Alert style={{marginTop: "10px"}}variant="warning" onClose={() => setShow(false)} dismissible>
-        <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+        {/* <Alert.Heading>Warning</Alert.Heading> */}
         <p>
-          Change this and that and try again. Duis mollis, est non commodo
-          luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
-          Cras mattis consectetur purus sit amet fermentum.
+          Clicking on a "Read" button below will redirect you to an external website. Links are hosted by third parties and are not affiliated with this website. Links will be constantly updated to provide a safe and secure experience.
         </p>
       </Alert>
     );
