@@ -25,7 +25,7 @@ function Header() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end mangaNav">
                     <Nav>
-                        <Link to="/"><Nav.Link><span className="d-inline d-sm-none">Home</span></Nav.Link></Link>
+                        <Link to="/" style={{textDecoration: 'none', color: '#ffffff8c'}}><span className="d-inline d-sm-none">Home</span></Link>
                         <NavDropdown title="Manga List" id="basic-nav-dropdown" menuVariant="dark">
                             <Link to="/attack"><NavDropdown.Item>Attack on Titan</NavDropdown.Item></Link>
                             <Link to="/chainsaw"><NavDropdown.Item>Chainsaw Man</NavDropdown.Item></Link>
