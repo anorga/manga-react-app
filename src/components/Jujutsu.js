@@ -1,12 +1,13 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
 import jujutsuBanner from './assets/jujutsuBanner.jpeg';
+import AlertDismiss from './AlertDismiss';
 
 function Jujutsu() {
     return (
         <Container>
             <img src={jujutsuBanner} className="img-fluid chainsawImg" alt="Jujutsu banner" style={{ borderRadius: 4 }} />
-            
+            <AlertDismiss />
             <ul className="list-group" style={{ marginTop: 10 }}>
                 <li className="list-group-item list-group-item-action">Chapter 1<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a style={{color: "white", textDecoration: "none"}} href="https://w3.readjujutsu.com/manga/jujutsukaisen-chapter-1-2-1-ryomen-sukuna/">Read</a></span></li>
                 <li className="list-group-item list-group-item-action">Chapter 2<span style={{ float: 'right' }} className="badge rounded-pill bg-primary"><a style={{color: "white", textDecoration: "none"}} href="https://w3.readjujutsu.com/manga/jujutsukaisen-chapter-1-2-2-secret-execution/">Read</a></span></li>
