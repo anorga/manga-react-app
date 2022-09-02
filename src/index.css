@@ -61,3 +61,6 @@ li {
 .dropdownItem:hover {
   background-color: rgb(87, 87, 87);
 }
+.dropdownHome:hover {
+  color: #fff;
+}
