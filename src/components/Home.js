@@ -11,7 +11,6 @@ function Home() {
     return (
         <Container>
             <img src={animeBanner}  className="img-fluid" id="animeBanner" alt="Anime banner"/>
-            {/* <h1 id="title">Manga</h1> */}
             <ul className="list-group list-group-flush list-main">
                 {/* Card One */}
                 <li className="list-group-item list-group-item-action manga-li" >
