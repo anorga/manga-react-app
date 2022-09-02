@@ -1,11 +1,15 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
 import attackBanner from './assets/attackBanner.jpg';
+import AlertDismiss from './AlertDismiss';
+
+
 
 function Attack() {
     return(
         <Container>
         <img src={attackBanner} className="img-fluid" alt="Attack on Titan banner" style={{ borderRadius: 4 }} />
+<AlertDismiss />
         <ul className="list-group" style={{ marginTop: 10  }}>
         <li className="list-group-item list-group-item-action">Chapter 1<span style={{float: 'right'}} className="badge rounded-pill bg-primary"><a style={{color: "white", textDecoration: "none"}} href="https://readaot.com/manga/shingeki-no-kyojin-chapter-1/">Read</a></span></li>
         <li className="list-group-item list-group-item-action">Chapter 2<span style={{float: 'right'}} className="badge rounded-pill bg-primary"><a style={{color: "white", textDecoration: "none"}} href="https://readaot.com/manga/shingeki-no-kyojin-chapter-2/">Read</a></span></li>
