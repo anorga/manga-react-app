@@ -10,7 +10,7 @@ function AlertDismiss() {
       <Alert style={{marginTop: "10px"}}variant="warning" onClose={() => setShow(false)} dismissible>
         {/* <Alert.Heading>Warning</Alert.Heading> */}
         <p>
-          Clicking on a "Read" button below will redirect you to an external website. Links are hosted by third parties and are not affiliated with this website. Links will be constantly updated to provide a safe and secure experience.
+          Clicking on any "Read" button below will redirect you to an external website. Links are hosted by third parties and are not affiliated with this website. Links will be constantly updated to provide a safe and secure experience.
         </p>
       </Alert>
     );
