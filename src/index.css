@@ -12,7 +12,8 @@ code {
     monospace;
 }
 
-a, a:hover {
+a,
+a:hover {
   text-decoration: none;
   color: white;
 }
@@ -37,7 +38,6 @@ li {
 
 .homeImage {
   max-width: 269px;
-  /* max-height: 290px; */
   max-height: 200px;
   border-radius: 3px;
   opacity: 1;
