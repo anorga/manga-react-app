@@ -15,7 +15,7 @@ function Home() {
             <ul className="list-group list-group-flush list-main">
                 {/* Card One */}
                 <li className="list-group-item list-group-item-action manga-li" >
-                    <Link to="/attack">
+                    <Link to="/attack" style={{textDecoration: 'none', color: "black"}}>
                         <div className="mangaList">
                             <img src={attack} className="img-fluid rounded-start homeImage" alt="Attack on Titan Manga Cover" />
                             <div className="homeText">
@@ -28,7 +28,7 @@ function Home() {
 
                 {/* Card Two */}
                 <li className="list-group-item list-group-item-action manga-li">
-                    <Link to="/chainsaw">
+                    <Link to="/chainsaw" style={{textDecoration: 'none', color: "black"}}>
                         <div className="mangaList">
                             <img src={chainsaw} className="img-fluid rounded-start homeImage" alt="Chainsaw Man Manga Cover" />
                             <div className="homeText">
@@ -41,7 +41,7 @@ function Home() {
 
                 {/* Card Three */}
                 <li className="list-group-item list-group-item-action manga-li">
-                    <Link to="/jujutsu">
+                    <Link to="/jujutsu" style={{textDecoration: 'none', color: "black"}}>
                         <div className="mangaList">
                             <img src={jjk} className="img-fluid rounded-start homeImage" alt="Jujutsu Kaisen Manga Cover" />
                             <div className="homeText">

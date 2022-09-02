@@ -10,7 +10,7 @@ function Header() {
     return (
         <Navbar sticky="top" bg="dark" variant="dark" expand="lg">
             <Container>
-                <Link to="/">
+                <Link to="/" style={{textDecoration: 'none'}}>
                     <Navbar.Brand>
                         <img
                             src={rengoku}
