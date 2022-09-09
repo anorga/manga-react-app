@@ -13,7 +13,7 @@ function Footer() {
                 className="d-inline-block"
                 alt="React Bootstrap logo"
             />
-            </a>{' '}Christian Anorga
+            </a>{' '}&#169; 2022 Christian Anorga
         </Container>
 
     );
