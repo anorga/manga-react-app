@@ -21,6 +21,7 @@ function Footer() {
                     width="24"
                     height="24"
                     className="d-inline-block"
+                    style={{ marginRight: 5 }}
                     alt="React Bootstrap logo"
                 />
             </a>
