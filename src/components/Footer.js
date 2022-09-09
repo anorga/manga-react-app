@@ -5,13 +5,12 @@ import email from './assets/email.png';
 
 function Footer() {
     return (
-        <Container style={{ textAlign: "left", marginTop: 20, marginBottom: 10, display: 'flex' }}>
+        <Container style={{ marginTop: 20, marginBottom: 10, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <a href="https://github.com/anorga" target="_blank">
                 <img
                     src={github}
                     width="41"
                     height="41"
-                    className="d-inline-block"
                     alt="React Bootstrap logo"
                 />
             </a>
@@ -20,12 +19,11 @@ function Footer() {
                     src={email}
                     width="24"
                     height="24"
-                    className="d-inline-block"
                     style={{ marginRight: 10 }}
-                    alt="React Bootstrap logo"
+                    alt="Email logo"
                 />
             </a>
-            <p style={{ marginTop: 0 }}>&#169; 2022 Christian Anorga</p>
+            <p style={{ marginTop: 20 }}>&#169; 2022 Christian Anorga</p>
         </Container>
     );
 }
