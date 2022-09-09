@@ -18,8 +18,8 @@ function Footer() {
             <a href="https://github.com/anorga">
                 <img
                     src={email}
-                    width="41"
-                    height="41"
+                    width="24"
+                    height="24"
                     className="d-inline-block"
                     alt="React Bootstrap logo"
                 />
