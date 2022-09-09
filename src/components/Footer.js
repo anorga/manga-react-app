@@ -5,7 +5,7 @@ import email from './assets/email.png';
 
 function Footer() {
     return (
-        <Container style={{ textAlign: "left", marginTop: 20, marginBottom: 10 }}>
+        <Container style={{ textAlign: "left", marginTop: 20, marginBottom: 10, display: 'flex' }}>
             <a href="https://github.com/anorga" target="_blank">
                 <img
                     src={github}
@@ -25,7 +25,7 @@ function Footer() {
                     alt="React Bootstrap logo"
                 />
             </a>
-            <p className="d-inline-block">&#169; 2022 Christian Anorga</p>
+            <p style={{ marginTop: 0 }}>&#169; 2022 Christian Anorga</p>
         </Container>
     );
 }
