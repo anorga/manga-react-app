@@ -16,7 +16,7 @@ function Footer() {
                     />
                 </a>
             </Container>
-            {' '}&#169; 2022 Christian Anorga
+            <p className="d-inline-block">&#169; 2022 Christian Anorga</p>
         </React.Fragment>
     );
 
