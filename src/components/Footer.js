@@ -16,7 +16,6 @@ function Footer() {
             </a>
             <p className="d-inline-block">&#169; 2022 Christian Anorga</p>
         </Container>
-
     );
 }
 
