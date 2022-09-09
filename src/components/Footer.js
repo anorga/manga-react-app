@@ -1,6 +1,7 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
 import github from './assets/github.png';
+import email from './assets/email.png';
 
 function Footer() {
     return (
@@ -8,6 +9,15 @@ function Footer() {
             <a href="https://github.com/anorga">
                 <img
                     src={github}
+                    width="41"
+                    height="41"
+                    className="d-inline-block"
+                    alt="React Bootstrap logo"
+                />
+            </a>
+            <a href="https://github.com/anorga">
+                <img
+                    src={email}
                     width="41"
                     height="41"
                     className="d-inline-block"
