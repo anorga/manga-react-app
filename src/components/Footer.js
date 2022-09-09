@@ -4,22 +4,20 @@ import github from './assets/github.png';
 
 function Footer() {
     return (
-        <React.Fragment>
-            <Container style={{ textAlign: "left", marginTop: 20, marginBottom: 10 }}>
-                <a href="https://github.com/anorga">
-                    <img
-                        src={github}
-                        width="41"
-                        height="41"
-                        className="d-inline-block"
-                        alt="React Bootstrap logo"
-                    />
-                </a>
-            </Container>
+        <Container style={{ textAlign: "left", marginTop: 20, marginBottom: 10 }}>
+            <a href="https://github.com/anorga">
+                <img
+                    src={github}
+                    width="41"
+                    height="41"
+                    className="d-inline-block"
+                    alt="React Bootstrap logo"
+                />
+            </a>
             <p className="d-inline-block">&#169; 2022 Christian Anorga</p>
-        </React.Fragment>
-    );
+        </Container>
 
+    );
 }
 
 export default Footer;
