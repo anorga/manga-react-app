@@ -6,7 +6,7 @@ import email from './assets/email.png';
 function Footer() {
     return (
         <Container style={{ textAlign: "left", marginTop: 20, marginBottom: 10 }}>
-            <a href="https://github.com/anorga">
+            <a href="https://github.com/anorga" target="_blank">
                 <img
                     src={github}
                     width="41"
