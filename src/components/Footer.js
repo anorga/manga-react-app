@@ -15,13 +15,13 @@ function Footer() {
                     alt="React Bootstrap logo"
                 />
             </a>
-            <a href="https://github.com/anorga">
+            <a href="mailto: anorga2990@gmail.com">
                 <img
                     src={email}
                     width="24"
                     height="24"
                     className="d-inline-block"
-                    style={{ marginRight: 5 }}
+                    style={{ marginRight: 10 }}
                     alt="React Bootstrap logo"
                 />
             </a>
