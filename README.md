@@ -4,9 +4,9 @@ Application for manga enthusiasts.
 
 This application aggregates external links to read popular manga.
 
-Links will be constantly updated, some might not be up-to-date. 
+Links will be constantly updated. 
 
-This application was built using React and Bootstrap.
+This application was built using React, React-Router, and Bootstrap.
 
 Best viewed on mobile.
 
