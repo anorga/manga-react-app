@@ -31,7 +31,7 @@ function Header() {
                             <Link to="/chainsaw" style={{display: 'block', textDecoration: 'none', color: '#dee2e6', paddingLeft: '15px'}} className="dropdownItem">Chainsaw Man</Link>
                             <Link to="/jujutsu" style={{display: 'block', textDecoration: 'none', color: '#dee2e6', paddingLeft: '15px'}} className="dropdownItem">Jujutsu Kaisen</Link>
                         </NavDropdown>
-                        <Nav.Link>Log In</Nav.Link>
+                        {/* <Nav.Link>Log In</Nav.Link> */}
                     </Nav>
                 </Navbar.Collapse>
             </Container>
