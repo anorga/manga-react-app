@@ -33,11 +33,11 @@ export function Home() {
 
         {results.length > 0 ? (
           <div className="manga-grid">
-            {results.map((item, index) => (
+            {results.map((item) => (
               <Link className="manga-card" to={`/${item.slug}`} key={item.slug} style={{ '--accent': item.accent } as React.CSSProperties}>
                 <div className="cover-wrap">
                   <img src={item.cover} alt="" />
-                  <span className="card-number">0{index + 1}</span>
+                  <span className="card-number">{String(manga.indexOf(item) + 1).padStart(2, '0')}</span>
                   <span className="card-arrow" aria-hidden="true">↗</span>
                 </div>
                 <div className="card-copy">

@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 export function Header() {
   return (
@@ -10,7 +10,7 @@ export function Header() {
         </NavLink>
         <nav aria-label="Primary navigation">
           <NavLink to="/">Discover</NavLink>
-          <a href="#library">Library</a>
+          <Link to="/#library">Library</Link>
         </nav>
       </div>
     </header>

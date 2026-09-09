@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { chapters, manga } from '../data'
 
@@ -6,6 +6,11 @@ export function MangaDetail() {
   const { slug } = useParams()
   const title = manga.find((item) => item.slug === slug)
   const [chapterQuery, setChapterQuery] = useState('')
+
+  useEffect(() => {
+    document.title = title ? `${title.title} — Read Manga` : 'Read Manga'
+    return () => { document.title = 'Read Manga — Find your next story' }
+  }, [title])
 
   if (!title) return <Navigate to="/" replace />
 

@@ -3,10 +3,12 @@ import { Header } from './components/Header.tsx'
 import { Footer } from './components/Footer.tsx'
 import { Home } from './components/Home.tsx'
 import { MangaDetail } from './components/MangaDetail.tsx'
+import { ScrollToTop } from './components/ScrollToTop.tsx'
 
 export default function App() {
   return (
     <div className="app-shell">
+      <ScrollToTop />
       <Header />
       <main>
         <Routes>
