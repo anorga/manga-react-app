@@ -2,6 +2,8 @@
 
 A mobile-first manga discovery experience with a curated library and streamlined chapter browsing.
 
+[View the live app](https://manga-react-app.vercel.app)
+
 ## Highlights
 
 - Responsive editorial-style library
