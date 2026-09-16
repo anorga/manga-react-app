@@ -1,9 +1,9 @@
-import attackCover from './components/assets/attack.png'
-import attackBanner from './components/assets/attackBanner.jpg'
-import chainsawCover from './components/assets/chainsaw.jpeg'
-import chainsawBanner from './components/assets/chainsawBanner.jpeg'
-import jujutsuCover from './components/assets/jjk.jpg'
-import jujutsuBanner from './components/assets/jujutsuBanner.jpeg'
+import attackCover from './components/assets/attack-cover.jpg'
+import attackBanner from './components/assets/attack-banner.jpg'
+import chainsawCover from './components/assets/chainsaw-cover.jpg'
+import chainsawBanner from './components/assets/chainsaw-banner.jpg'
+import jujutsuCover from './components/assets/jujutsu-cover.jpg'
+import jujutsuBanner from './components/assets/jujutsu-banner.jpg'
 
 export type Manga = {
   slug: string
@@ -14,7 +14,10 @@ export type Manga = {
   cover: string
   banner: string
   accent: string
-  chapterUrl: (chapter: number) => string
+  author: string
+  publisher: string
+  officialUrl: string
+  apiId?: string
 }
 
 export const manga: Manga[] = [
@@ -27,7 +30,9 @@ export const manga: Manga[] = [
     cover: attackCover,
     banner: attackBanner,
     accent: '#d66d44',
-    chapterUrl: (chapter) => `https://readaot.com/manga/shingeki-no-kyojin-chapter-${chapter}/`,
+    author: 'Hajime Isayama',
+    publisher: 'Kodansha',
+    officialUrl: 'https://kodansha.us/series/attack-on-titan/',
   },
   {
     slug: 'chainsaw',
@@ -38,7 +43,9 @@ export const manga: Manga[] = [
     cover: chainsawCover,
     banner: chainsawBanner,
     accent: '#e9a527',
-    chapterUrl: (chapter) => `https://chainsaw-man-mangas.com/manga/chainsaw-man-chapter-${chapter}/`,
+    author: 'Tatsuki Fujimoto',
+    publisher: 'VIZ Media',
+    officialUrl: 'https://www.viz.com/shonenjump/chapters/chainsaw-man',
   },
   {
     slug: 'jujutsu',
@@ -49,8 +56,12 @@ export const manga: Manga[] = [
     cover: jujutsuCover,
     banner: jujutsuBanner,
     accent: '#8a72d6',
-    chapterUrl: (chapter) => `https://w3.readjujutsu.com/?s=jujutsu+kaisen+chapter+${chapter}`,
+    author: 'Gege Akutami',
+    publisher: 'VIZ Media',
+    officialUrl: 'https://www.viz.com/shonenjump/chapters/jujutsu-kaisen',
   },
 ]
 
-export const chapters = Array.from({ length: 25 }, (_, index) => index + 1)
+export function getMangaBySlug(slug: string | undefined) {
+  return manga.find((item) => item.slug === slug)
+}

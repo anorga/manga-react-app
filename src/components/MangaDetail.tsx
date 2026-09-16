@@ -1,52 +1,79 @@
-import { useEffect, useState } from 'react'
-import { Link, Navigate, useParams } from 'react-router-dom'
-import { chapters, manga } from '../data'
+import { Link, useParams } from 'react-router-dom'
+import { getMangaBySlug } from '../data'
+import { useLibrary } from '../hooks/useLibrary'
+import { usePageMeta } from '../hooks/usePageMeta'
+import type { ReadingStatus } from '../library'
+import { NotFound } from './NotFound'
 
 export function MangaDetail() {
   const { slug } = useParams()
-  const title = manga.find((item) => item.slug === slug)
-  const [chapterQuery, setChapterQuery] = useState('')
+  const title = getMangaBySlug(slug)
+  const { entries, remove, save, setStatus, update } = useLibrary()
+  usePageMeta(title?.title ?? 'Page not found', title?.description ?? 'The requested title is not in this collection.', title ? `/${title.slug}` : '/404')
 
-  useEffect(() => {
-    document.title = title ? `${title.title} — Read Manga` : 'Read Manga'
-    return () => { document.title = 'Read Manga — Find your next story' }
-  }, [title])
+  if (!title) return <NotFound />
 
-  if (!title) return <Navigate to="/" replace />
-
-  const visibleChapters = chapters.filter((chapter) => String(chapter).includes(chapterQuery.trim()))
+  const entry = entries[title.slug]
+  const currentChapter = entry?.currentChapter ?? 0
 
   return (
     <article className="detail-page page-width" style={{ '--accent': title.accent } as React.CSSProperties}>
       <Link className="back-link" to="/">← Back to library</Link>
       <section className="detail-hero">
-        <img src={title.banner} alt="" />
+        <img src={title.banner} alt="" fetchPriority="high" decoding="async" />
         <div className="detail-shade" />
         <div className="detail-copy">
           <div className="genre-list">{title.genres.map((genre) => <span key={genre}>{genre}</span>)}</div>
           <h1>{title.title}</h1>
           <p>{title.description}</p>
+          <p className="creator-line">By {title.author} · {title.publisher}</p>
         </div>
       </section>
 
-      <section className="chapter-section">
-        <div className="chapter-heading">
-          <div><p className="eyebrow">Reading list</p><h2>Chapters</h2></div>
-          <label className="search compact">
-            <span className="sr-only">Find a chapter</span>
-            <span aria-hidden="true">#</span>
-            <input inputMode="numeric" value={chapterQuery} onChange={(event) => setChapterQuery(event.target.value)} placeholder="Find chapter" />
-          </label>
+      <section className="tracker-section">
+        <div className="tracker-intro">
+          <div><p className="eyebrow">Private reading tracker</p><h2>Keep your place</h2></div>
+          <button className={`save-pill ${entry ? 'saved' : ''}`} onClick={() => entry ? remove(title.slug) : save(title.slug)}>
+            {entry ? '✓ Saved to library' : '+ Add to library'}
+          </button>
         </div>
-        <p className="external-note">Chapter links open on independent third-party websites.</p>
-        <ol className="chapter-list">
-          {visibleChapters.map((chapter) => (
-            <li key={chapter}>
-              <span><small>Chapter</small>{String(chapter).padStart(2, '0')}</span>
-              <a href={title.chapterUrl(chapter)} target="_blank" rel="noreferrer">Read chapter <span aria-hidden="true">↗</span></a>
-            </li>
-          ))}
-        </ol>
+
+        <div className="tracker-grid">
+          <div className="tracker-card">
+            <label htmlFor="reading-status">Reading status</label>
+            <select
+              id="reading-status"
+              value={entry?.status ?? 'want-to-read'}
+              onChange={(event) => setStatus(title.slug, event.target.value as ReadingStatus)}
+            >
+              <option value="want-to-read">Want to read</option>
+              <option value="reading">Reading</option>
+              <option value="completed">Completed</option>
+            </select>
+            <p>Saved only in this browser.</p>
+          </div>
+
+          <div className="tracker-card">
+            <label htmlFor="current-chapter">Current chapter</label>
+            <div className="chapter-stepper">
+              <button aria-label="Previous chapter" onClick={() => update(title.slug, { currentChapter: currentChapter - 1, status: 'reading' })}>−</button>
+              <input
+                id="current-chapter"
+                type="number"
+                min="0"
+                value={currentChapter}
+                onChange={(event) => update(title.slug, { currentChapter: Number(event.target.value), status: 'reading' })}
+              />
+              <button aria-label="Next chapter" onClick={() => update(title.slug, { currentChapter: currentChapter + 1, status: 'reading' })}>+</button>
+            </div>
+            <p>Update manually until live catalog data is connected.</p>
+          </div>
+        </div>
+
+        <div className="official-source">
+          <div><p className="eyebrow">Official source</p><h3>Read through {title.publisher}</h3></div>
+          <a href={title.officialUrl} target="_blank" rel="noreferrer">Visit publisher <span aria-hidden="true">↗</span></a>
+        </div>
       </section>
     </article>
   )

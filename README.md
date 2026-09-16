@@ -1,17 +1,22 @@
 # Read Manga
 
-A mobile-first manga discovery experience with a curated library and streamlined chapter browsing.
+A mobile-first manga discovery and reading tracker with a curated library.
 
 [View the live app](https://manga-react-app.vercel.app)
 
 ## Highlights
 
 - Responsive editorial-style library
-- Search by title or genre
+- Search by title, creator, or genre
+- Private saved library and reading progress stored in the browser
+- Official publisher links instead of unmaintained chapter mirrors
 - Reusable, data-driven manga detail pages
-- Chapter filtering and clear third-party link treatment
 - Accessible navigation, focus states, and reduced-motion support
 - Vite, React, and TypeScript
+
+## Catalog data
+
+The current catalog is local and typed in `src/data.ts`. Each title includes an optional `apiId` field so a future manga API can be connected without changing the reading-library schema. User progress remains local and independent from the catalog provider.
 
 ## Local development
 
@@ -24,8 +29,7 @@ npm run dev
 
 ```bash
 npm run lint
+npm test
 npm run build
 npm audit
 ```
-
-Chapter links open independent third-party websites and are not hosted by or affiliated with this project.

@@ -1,6 +1,10 @@
 import { Link, NavLink } from 'react-router-dom'
+import { useLibrary } from '../hooks/useLibrary'
 
 export function Header() {
+  const { entries } = useLibrary()
+  const savedCount = Object.keys(entries).length
+
   return (
     <header className="site-header">
       <div className="header-inner">
@@ -10,7 +14,7 @@ export function Header() {
         </NavLink>
         <nav aria-label="Primary navigation">
           <NavLink to="/">Discover</NavLink>
-          <Link to="/#library">Library</Link>
+          <Link to="/#library">Library{savedCount > 0 ? <span className="library-count">{savedCount}</span> : null}</Link>
         </nav>
       </div>
     </header>
