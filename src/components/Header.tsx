@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useLibrary } from '../hooks/useLibrary'
 
 export function Header() {
@@ -14,7 +14,7 @@ export function Header() {
         </NavLink>
         <nav aria-label="Primary navigation">
           <NavLink to="/">Discover</NavLink>
-          <Link to="/#library">Library{savedCount > 0 ? <span className="library-count">{savedCount}</span> : null}</Link>
+          <NavLink to="/library">Library{savedCount > 0 ? <span className="library-count">{savedCount}</span> : null}</NavLink>
         </nav>
       </div>
     </header>

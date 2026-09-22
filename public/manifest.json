@@ -1,16 +1,31 @@
 {
   "short_name": "Read Manga",
   "name": "Read Manga — Private Reading Tracker",
+  "description": "Discover manga, build a private library, and track your reading progress in your browser.",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "pwa-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "pwa-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "pwa-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "orientation": "any",
   "theme_color": "#12100f",
   "background_color": "#12100f"
 }
