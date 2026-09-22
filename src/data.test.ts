@@ -11,4 +11,13 @@ describe('manga catalog', () => {
     expect(getMangaBySlug('chainsaw')?.title).toBe('Chainsaw Man')
     expect(getMangaBySlug('missing')).toBeUndefined()
   })
+
+  it('carries a positive chapter count and a 5-point rating', () => {
+    manga.forEach((item) => {
+      expect(item.chapters).toBeGreaterThan(0)
+      expect(item.rating).toBeGreaterThan(0)
+      expect(item.rating).toBeLessThanOrEqual(5)
+      expect(item.year).toBeGreaterThan(1950)
+    })
+  })
 })

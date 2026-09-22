@@ -17,6 +17,10 @@ export type Manga = {
   author: string
   publisher: string
   officialUrl: string
+  year: number
+  endYear?: number
+  chapters: number
+  rating: number
   apiId?: string
 }
 
@@ -33,6 +37,10 @@ export const manga: Manga[] = [
     author: 'Hajime Isayama',
     publisher: 'Kodansha',
     officialUrl: 'https://kodansha.us/series/attack-on-titan/',
+    year: 2009,
+    endYear: 2021,
+    chapters: 89,
+    rating: 4.8,
   },
   {
     slug: 'chainsaw',
@@ -46,6 +54,9 @@ export const manga: Manga[] = [
     author: 'Tatsuki Fujimoto',
     publisher: 'VIZ Media',
     officialUrl: 'https://www.viz.com/shonenjump/chapters/chainsaw-man',
+    year: 2018,
+    chapters: 125,
+    rating: 4.6,
   },
   {
     slug: 'jujutsu',
@@ -59,9 +70,15 @@ export const manga: Manga[] = [
     author: 'Gege Akutami',
     publisher: 'VIZ Media',
     officialUrl: 'https://www.viz.com/shonenjump/chapters/jujutsu-kaisen',
+    year: 2018,
+    endYear: 2024,
+    chapters: 244,
+    rating: 4.7,
   },
 ]
 
 export function getMangaBySlug(slug: string | undefined) {
   return manga.find((item) => item.slug === slug)
 }
+
+export const allGenres = [...new Set(manga.flatMap((item) => item.genres))].sort()
