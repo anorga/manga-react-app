@@ -83,6 +83,12 @@ export function Home() {
       ) : null}
 
       <section className="library page-width" id="library">
+        {Object.keys(entries).length > 0 ? (
+          <div className="library-cta">
+            <p><strong>{Object.keys(entries).length} {Object.keys(entries).length === 1 ? 'title' : 'titles'}</strong> in your library — manage your reading progress</p>
+            <Link to="/library">My library →</Link>
+          </div>
+        ) : null}
         <div className="section-heading">
           <div>
             <p className="eyebrow">Curated library</p>
