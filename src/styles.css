@@ -258,3 +258,9 @@ main { flex: 1; }
   .library-card img { width: 64px; height: 92px; }
   .library-stats { gap: 18px; }
 }
+
+/* --- error boundary --- */
+.error-boundary { display: grid; gap: 14px; padding: 96px 0; max-width: 640px; }
+.error-boundary h1 { font-size: 1.6rem; }
+.error-boundary .hero-copy { opacity: .8; }
+.error-boundary .primary-button { justify-self: start; }

@@ -23,11 +23,13 @@ import spyFamilyBanner from './components/assets/spyfamily-banner.jpg'
 import drStoneCover from './components/assets/drstone-cover.jpg'
 import drStoneBanner from './components/assets/drstone-banner.jpg'
 
+export type SeriesStatus = 'Ongoing' | 'Completed'
+
 export type Manga = {
   slug: string
   title: string
   description: string
-  status: string
+  status: SeriesStatus
   genres: string[]
   cover: string
   banner: string
@@ -66,7 +68,7 @@ export const manga: Manga[] = [
     slug: 'chainsaw',
     title: 'Chainsaw Man',
     description: 'Burdened by debt, Denji survives by hunting Devils with Pochita—until one brutal betrayal transforms everything.',
-    status: 'Ongoing',
+    status: 'Completed',
     genres: ['Action', 'Horror'],
     cover: chainsawCover,
     banner: chainsawBanner,
@@ -75,7 +77,8 @@ export const manga: Manga[] = [
     publisher: 'VIZ Media',
     officialUrl: 'https://www.viz.com/shonenjump/chapters/chainsaw-man',
     year: 2018,
-    chapters: 125,
+    endYear: 2026,
+    chapters: 232,
     rating: 4.6,
   },
   {
@@ -92,7 +95,7 @@ export const manga: Manga[] = [
     officialUrl: 'https://www.viz.com/shonenjump/chapters/jujutsu-kaisen',
     year: 2018,
     endYear: 2024,
-    chapters: 244,
+    chapters: 271,
     rating: 4.7,
   },
   {
@@ -108,7 +111,7 @@ export const manga: Manga[] = [
     publisher: 'VIZ Media',
     officialUrl: 'https://www.viz.com/shonenjump/chapters/one-piece',
     year: 1997,
-    chapters: 1106,
+    chapters: 1193,
     rating: 4.8,
   },
   {
@@ -142,7 +145,7 @@ export const manga: Manga[] = [
     officialUrl: 'https://www.viz.com/shonenjump/chapters/my-hero-academia',
     year: 2014,
     endYear: 2024,
-    chapters: 432,
+    chapters: 430,
     rating: 3.9,
   },
   {
@@ -158,7 +161,7 @@ export const manga: Manga[] = [
     publisher: 'VIZ Media',
     officialUrl: 'https://www.viz.com/shonenjump/chapters/one-punch-man',
     year: 2012,
-    chapters: 230,
+    chapters: 237,
     rating: 4.2,
   },
   {
@@ -209,7 +212,7 @@ export const manga: Manga[] = [
     officialUrl: 'https://kodansha.us/series/vinland-saga/',
     year: 2005,
     endYear: 2025,
-    chapters: 224,
+    chapters: 220,
     rating: 4.5,
   },
   {
@@ -225,7 +228,7 @@ export const manga: Manga[] = [
     publisher: 'VIZ Media',
     officialUrl: 'https://www.viz.com/shonenjump/chapters/spy-x-family',
     year: 2019,
-    chapters: 188,
+    chapters: 140,
     rating: 4.2,
   },
   {
@@ -242,7 +245,7 @@ export const manga: Manga[] = [
     officialUrl: 'https://www.viz.com/shonenjump/chapters/dr-stone',
     year: 2017,
     endYear: 2024,
-    chapters: 236,
+    chapters: 232,
     rating: 4.1,
   },
 ]

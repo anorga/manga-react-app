@@ -59,9 +59,15 @@ export function createLibraryEntry(slug: string): LibraryEntry {
   }
 }
 
-/** Clamp a chapter value to the valid [0, total] range; non-finite input becomes 0. */
-export function clampChapter(value: number, total: number) {
+/**
+ * Normalize a chapter value. Every entry is an integer at least 0; for finished
+ * titles the value is additionally capped at the final chapter, while ongoing
+ * series are never hard-capped so readers can log chapters past the catalog's
+ * "latest known" count (the catalog only tracks series as of its last audit).
+ */
+export function normalizeChapter(value: number, total?: number, completed = false) {
   if (!Number.isFinite(value)) return 0
-  const max = Math.max(0, Math.floor(total))
-  return Math.min(Math.max(0, Math.floor(value)), max)
+  const chapter = Math.max(0, Math.floor(value))
+  if (completed && total !== undefined) return Math.min(chapter, Math.max(0, Math.floor(total)))
+  return chapter
 }
