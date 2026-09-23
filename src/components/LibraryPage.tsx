@@ -61,11 +61,23 @@ export function LibraryPage() {
                   <button className="library-remove" onClick={() => remove(item.slug)} aria-label={`Remove ${item.title} from library`}>Remove</button>
                 </div>
                 <p className="library-card-meta">{item.author} · {item.publisher}</p>
-                <div className="progress" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
+                <div className="progress" role="progressbar" aria-label={`Reading progress for ${item.title}`} aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-valuetext={`Chapter ${entry.currentChapter} of ${item.chapters}`}>
                   <span style={{ width: `${pct}%` }} />
                 </div>
                 <div className="library-controls">
-                  <select value={entry.status} onChange={(event) => setStatus(item.slug, event.target.value as ReadingStatus)} aria-label={`Status for ${item.title}`}>
+                  <select
+                    value={entry.status}
+                    onChange={(event) => {
+                      const status = event.target.value as ReadingStatus
+                      if (status === 'completed') {
+                        // Marking completed syncs progress to the final chapter so stats stay consistent.
+                        update(item.slug, { status, currentChapter: item.chapters }, { chapterTotal: item.chapters })
+                      } else {
+                        setStatus(item.slug, status)
+                      }
+                    }}
+                    aria-label={`Status for ${item.title}`}
+                  >
                     <option value="want-to-read">Want to read</option>
                     <option value="reading">Reading</option>
                     <option value="completed">Completed</option>
@@ -76,7 +88,7 @@ export function LibraryPage() {
                       min="0"
                       max={item.chapters}
                       value={entry.currentChapter}
-                      onChange={(event) => update(item.slug, { currentChapter: Number(event.target.value), status: 'reading' })}
+                      onChange={(event) => update(item.slug, { currentChapter: Number(event.target.value), status: 'reading' }, { chapterTotal: item.chapters })}
                       aria-label={`Current chapter for ${item.title}`}
                     />
                     <span>of {item.chapters}</span>

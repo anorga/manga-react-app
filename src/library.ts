@@ -58,3 +58,10 @@ export function createLibraryEntry(slug: string): LibraryEntry {
     updatedAt: new Date().toISOString(),
   }
 }
+
+/** Clamp a chapter value to the valid [0, total] range; non-finite input becomes 0. */
+export function clampChapter(value: number, total: number) {
+  if (!Number.isFinite(value)) return 0
+  const max = Math.max(0, Math.floor(total))
+  return Math.min(Math.max(0, Math.floor(value)), max)
+}

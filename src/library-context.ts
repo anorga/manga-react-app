@@ -5,7 +5,7 @@ export type LibraryContextValue = {
   entries: LibraryState
   save: (slug: string) => void
   remove: (slug: string) => void
-  update: (slug: string, changes: Partial<Pick<LibraryEntry, 'currentChapter' | 'status'>>) => void
+  update: (slug: string, changes: Partial<Pick<LibraryEntry, 'currentChapter' | 'status'>>, limits?: { chapterTotal?: number }) => void
   setStatus: (slug: string, status: ReadingStatus) => void
 }
 

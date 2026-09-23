@@ -71,7 +71,7 @@ export function Home() {
                 <img src={item.cover} alt="" loading="lazy" decoding="async" />
                 <div className="continue-copy">
                   <span className="continue-title">{item.title}</span>
-                  <div className="progress" role="progressbar" aria-valuenow={progressPct(entry.currentChapter, item.chapters)} aria-valuemin={0} aria-valuemax={100}>
+                  <div className="progress" role="progressbar" aria-label={`Reading progress for ${item.title}`} aria-valuenow={progressPct(entry.currentChapter, item.chapters)} aria-valuemin={0} aria-valuemax={100} aria-valuetext={`Chapter ${entry.currentChapter} of ${item.chapters}`}>
                     <span style={{ width: `${progressPct(entry.currentChapter, item.chapters)}%` }} />
                   </div>
                   <span className="continue-meta">Chapter {entry.currentChapter} of {item.chapters}</span>
@@ -103,16 +103,21 @@ export function Home() {
 
         <div className="shelf-tabs" aria-label="Filter library">
           {(['all', 'saved', 'reading'] as const).map((option) => (
-            <button className={shelf === option ? 'active' : ''} key={option} onClick={() => setShelf(option)}>
+            <button
+              className={shelf === option ? 'active' : ''}
+              key={option}
+              onClick={() => setShelf(option)}
+              aria-pressed={shelf === option}
+            >
               {option === 'all' ? 'All titles' : option === 'saved' ? `My library (${Object.keys(entries).length})` : 'Reading now'}
             </button>
           ))}
         </div>
 
         <div className="filter-row">
-          <div className="genre-chips" aria-label="Filter by genre">
+          <div className="genre-chips" role="group" aria-label="Filter by genre">
             {allGenres.map((g) => (
-              <button key={g} className={genre === g ? 'active' : ''} onClick={() => setGenre(genre === g ? null : g)}>
+              <button key={g} className={genre === g ? 'active' : ''} onClick={() => setGenre(genre === g ? null : g)} aria-pressed={genre === g}>
                 {g}
               </button>
             ))}
@@ -152,7 +157,7 @@ export function Home() {
                         <span title="Years">{item.endYear ? `${item.year}–${item.endYear}` : `${item.year}`}</span>
                       </div>
                       {entry ? (
-                        <div className="progress card-progress" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
+                        <div className="progress card-progress" role="progressbar" aria-label={`Reading progress for ${item.title}`} aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-valuetext={`Chapter ${entry.currentChapter} of ${item.chapters}`}>
                           <span style={{ width: `${pct}%` }} />
                         </div>
                       ) : null}

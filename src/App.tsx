@@ -14,7 +14,7 @@ export default function App() {
       <div className="app-shell">
         <ScrollToTop />
         <Header />
-        <main>
+        <main tabIndex={-1}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/library" element={<LibraryPage />} />

@@ -59,20 +59,33 @@ describe('library + progress state', () => {
     clear()
   })
 
-  it('updates the chapter count from the library page and caps the bar at 100%', () => {
+  it('updates the chapter count and clamps out-of-range values to the valid range', () => {
     seed({ attack: entry('attack', 'reading', 1) })
     renderWithLibrary(<LibraryPage />, { route: '/library' })
 
     const input = screen.getByRole('spinbutton', { name: 'Current chapter for Attack on Titan' }) as HTMLInputElement
     setChapter(input, '5')
-
     expect(getStorage().attack.currentChapter).toBe(5)
-    expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '6') // 5 / 89
+    expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '4') // 5 / 139
 
-    // values beyond the total are stored as-typed but the bar caps at 100
+    // Values beyond the total clamp to the total (AOT has 139 chapters).
     setChapter(input, '999')
-    expect(getStorage().attack.currentChapter).toBe(999)
+    expect(getStorage().attack.currentChapter).toBe(139)
     expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '100')
+
+    // Negative input clamps to zero.
+    setChapter(input, '-5')
+    expect(getStorage().attack.currentChapter).toBe(0)
+    clear()
+  })
+
+  it('syncs progress to the final chapter when a title is marked completed', () => {
+    seed({ attack: entry('attack', 'reading', 40) })
+    renderWithLibrary(<LibraryPage />, { route: '/library' })
+
+    fireEvent.change(screen.getByRole('combobox', { name: 'Status for Attack on Titan' }), { target: { value: 'completed' } })
+    expect(getStorage().attack.status).toBe('completed')
+    expect(getStorage().attack.currentChapter).toBe(139) // synced to total
     clear()
   })
 
