@@ -66,18 +66,22 @@ export function Home() {
         <section className="continue page-width">
           <p className="eyebrow">Pick up where you left off</p>
           <div className="continue-list">
-            {continueReading.map(({ item, entry }) => (
-              <Link className="continue-card" key={item.slug} to={`/${item.slug}`} style={{ '--accent': item.accent } as React.CSSProperties}>
-                <img src={item.cover} alt="" loading="lazy" decoding="async" />
-                <div className="continue-copy">
-                  <span className="continue-title">{item.title}</span>
-                  <div className="progress" role="progressbar" aria-label={`Reading progress for ${item.title}`} aria-valuenow={progressPct(entry.currentChapter, item.chapters)} aria-valuemin={0} aria-valuemax={100} aria-valuetext={`Chapter ${entry.currentChapter} of ${item.chapters}`}>
-                    <span style={{ width: `${progressPct(entry.currentChapter, item.chapters)}%` }} />
+            {continueReading.map(({ item, entry }) => {
+              const isFinished = item.status === 'Completed'
+              const pct = progressPct(entry.currentChapter, item.chapters)
+              return (
+                <Link className="continue-card" key={item.slug} to={`/${item.slug}`} style={{ '--accent': item.accent } as React.CSSProperties}>
+                  <img src={item.cover} alt="" loading="lazy" decoding="async" />
+                  <div className="continue-copy">
+                    <span className="continue-title">{item.title}</span>
+                    <div className="progress" role="progressbar" aria-label={`Reading progress for ${item.title}`} aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-valuetext={isFinished ? `Chapter ${entry.currentChapter} of ${item.chapters}` : `Chapter ${entry.currentChapter} of ${item.chapters} known`}>
+                      <span style={{ width: `${pct}%` }} />
+                    </div>
+                    <span className="continue-meta">{isFinished ? `Chapter ${entry.currentChapter} of ${item.chapters}` : `Chapter ${entry.currentChapter} · ${item.chapters} published so far`}</span>
                   </div>
-                  <span className="continue-meta">Chapter {entry.currentChapter} of {item.chapters}</span>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              )
+            })}
           </div>
         </section>
       ) : null}
@@ -152,12 +156,12 @@ export function Home() {
                       <p>{item.description}</p>
                       {entry ? <p className="progress-copy">{entry.status.replaceAll('-', ' ')} · Chapter {entry.currentChapter}</p> : null}
                       <div className="card-stats">
-                        <span title="Chapters">{item.chapters} ch</span>
+                        <span title="Chapters">{item.status === 'Ongoing' ? `${item.chapters}+` : item.chapters} ch</span>
                         <span title="Rating" aria-label={`Rated ${item.rating} out of 5`}>★ {item.rating.toFixed(1)}</span>
                         <span title="Years">{item.endYear ? `${item.year}–${item.endYear}` : `${item.year}`}</span>
                       </div>
                       {entry ? (
-                        <div className="progress card-progress" role="progressbar" aria-label={`Reading progress for ${item.title}`} aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-valuetext={`Chapter ${entry.currentChapter} of ${item.chapters}`}>
+                        <div className="progress card-progress" role="progressbar" aria-label={`Reading progress for ${item.title}`} aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-valuetext={item.status === 'Ongoing' ? `Chapter ${entry.currentChapter} of ${item.chapters} known` : `Chapter ${entry.currentChapter} of ${item.chapters}`}>
                           <span style={{ width: `${pct}%` }} />
                         </div>
                       ) : null}

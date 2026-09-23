@@ -15,7 +15,12 @@ export function MangaDetail() {
 
   const entry = entries[title.slug]
   const currentChapter = entry?.currentChapter ?? 0
+  const isFinished = title.status === 'Completed'
+  const totalLabel = isFinished ? String(title.chapters) : `${title.chapters}+`
   const pct = Math.min(100, Math.round((currentChapter / title.chapters) * 100))
+  const progressText = isFinished
+    ? `${currentChapter} of ${title.chapters} chapters · ${pct}% complete`
+    : `Reading through chapter ${currentChapter} · ${title.chapters} published so far`
   const similar = manga.filter((item) => item.slug !== title.slug && item.genres.some((g) => title.genres.includes(g)))
 
   return (
@@ -30,7 +35,7 @@ export function MangaDetail() {
           <p>{title.description}</p>
           <p className="creator-line">By {title.author} · {title.publisher}</p>
           <div className="detail-stats">
-            <div><strong>{title.chapters}</strong><span>chapters</span></div>
+            <div><strong>{totalLabel}</strong><span>{isFinished ? 'chapters' : 'chapters so far'}</span></div>
             <div><strong>{title.endYear ? `${title.year}–${title.endYear}` : title.year}</strong><span>published</span></div>
             <div><strong>★ {title.rating.toFixed(1)}</strong><span>community</span></div>
             <div><strong>{title.status}</strong><span>status</span></div>
@@ -55,7 +60,8 @@ export function MangaDetail() {
               onChange={(event) => {
                 const status = event.target.value as ReadingStatus
                 if (status === 'completed') {
-                  update(title.slug, { status, currentChapter: title.chapters }, { chapterTotal: title.chapters })
+                  // Marking completed syncs progress forward (never rewind) to the final/latest chapter.
+                  update(title.slug, { status, currentChapter: Math.max(entry?.currentChapter ?? 0, title.chapters) }, { chapterTotal: title.chapters, completed: isFinished })
                 } else {
                   setStatus(title.slug, status)
                 }
@@ -71,21 +77,21 @@ export function MangaDetail() {
           <div className="tracker-card">
             <label htmlFor="current-chapter">Current chapter</label>
             <div className="chapter-stepper">
-              <button aria-label="Previous chapter" onClick={() => update(title.slug, { currentChapter: currentChapter - 1, status: 'reading' }, { chapterTotal: title.chapters })}>−</button>
+              <button aria-label="Previous chapter" onClick={() => update(title.slug, { currentChapter: currentChapter - 1, status: 'reading' }, { chapterTotal: title.chapters, completed: isFinished })}>−</button>
               <input
                 id="current-chapter"
                 type="number"
                 min="0"
-                max={title.chapters}
+                max={isFinished ? title.chapters : undefined}
                 value={currentChapter}
-                onChange={(event) => update(title.slug, { currentChapter: Number(event.target.value), status: 'reading' }, { chapterTotal: title.chapters })}
+                onChange={(event) => update(title.slug, { currentChapter: Number(event.target.value), status: 'reading' }, { chapterTotal: title.chapters, completed: isFinished })}
               />
-              <button aria-label="Next chapter" onClick={() => update(title.slug, { currentChapter: currentChapter + 1, status: 'reading' }, { chapterTotal: title.chapters })}>+</button>
+              <button aria-label="Next chapter" onClick={() => update(title.slug, { currentChapter: currentChapter + 1, status: 'reading' }, { chapterTotal: title.chapters, completed: isFinished })}>+</button>
             </div>
-            <div className="progress" role="progressbar" aria-label={`Reading progress for ${title.title}`} aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-valuetext={`Chapter ${currentChapter} of ${title.chapters}`}>
+            <div className="progress" role="progressbar" aria-label={`Reading progress for ${title.title}`} aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-valuetext={isFinished ? `Chapter ${currentChapter} of ${title.chapters}` : `Chapter ${currentChapter} of ${title.chapters} known`}>
               <span style={{ width: `${pct}%` }} />
             </div>
-            <p>{currentChapter} of {title.chapters} chapters · {pct}% complete</p>
+            <p>{progressText}</p>
           </div>
         </div>
 

@@ -18,7 +18,7 @@ export function LibraryPage() {
   const completed = saved.filter((pair) => pair.entry.status === 'completed').length
   const reading = saved.filter((pair) => pair.entry.status === 'reading').length
   const want = saved.filter((pair) => pair.entry.status === 'want-to-read').length
-  const chaptersRead = saved.reduce((sum, pair) => sum + Math.min(pair.entry.currentChapter, pair.item.chapters), 0)
+  const chaptersRead = saved.reduce((sum, pair) => sum + (pair.item.status === 'Completed' ? Math.min(pair.entry.currentChapter, pair.item.chapters) : pair.entry.currentChapter), 0)
   const topGenres = topOf(saved.flatMap((pair) => pair.item.genres))
 
   if (saved.length === 0) {
@@ -51,6 +51,8 @@ export function LibraryPage() {
 
       <div className="library-list">
         {saved.map(({ item, entry }) => {
+          const isFinished = item.status === 'Completed'
+          const totalLabel = isFinished ? String(item.chapters) : `${item.chapters}+`
           const pct = Math.min(100, Math.round((entry.currentChapter / item.chapters) * 100))
           return (
             <article className="library-card" key={item.slug} style={{ '--accent': item.accent } as React.CSSProperties}>
@@ -61,7 +63,7 @@ export function LibraryPage() {
                   <button className="library-remove" onClick={() => remove(item.slug)} aria-label={`Remove ${item.title} from library`}>Remove</button>
                 </div>
                 <p className="library-card-meta">{item.author} · {item.publisher}</p>
-                <div className="progress" role="progressbar" aria-label={`Reading progress for ${item.title}`} aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-valuetext={`Chapter ${entry.currentChapter} of ${item.chapters}`}>
+                <div className="progress" role="progressbar" aria-label={`Reading progress for ${item.title}`} aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-valuetext={isFinished ? `Chapter ${entry.currentChapter} of ${item.chapters}` : `Chapter ${entry.currentChapter} of ${item.chapters} known`}>
                   <span style={{ width: `${pct}%` }} />
                 </div>
                 <div className="library-controls">
@@ -70,8 +72,8 @@ export function LibraryPage() {
                     onChange={(event) => {
                       const status = event.target.value as ReadingStatus
                       if (status === 'completed') {
-                        // Marking completed syncs progress to the final chapter so stats stay consistent.
-                        update(item.slug, { status, currentChapter: item.chapters }, { chapterTotal: item.chapters })
+                        // Marking a finished title completed syncs progress forward (never rewind) to its final chapter.
+                        update(item.slug, { status, currentChapter: Math.max(entry.currentChapter, item.chapters) }, { chapterTotal: item.chapters, completed: isFinished })
                       } else {
                         setStatus(item.slug, status)
                       }
@@ -86,12 +88,12 @@ export function LibraryPage() {
                     <input
                       type="number"
                       min="0"
-                      max={item.chapters}
+                      max={isFinished ? item.chapters : undefined}
                       value={entry.currentChapter}
-                      onChange={(event) => update(item.slug, { currentChapter: Number(event.target.value), status: 'reading' }, { chapterTotal: item.chapters })}
+                      onChange={(event) => update(item.slug, { currentChapter: Number(event.target.value), status: 'reading' }, { chapterTotal: item.chapters, completed: isFinished })}
                       aria-label={`Current chapter for ${item.title}`}
                     />
-                    <span>of {item.chapters}</span>
+                    <span>of {totalLabel}</span>
                   </div>
                 </div>
               </div>

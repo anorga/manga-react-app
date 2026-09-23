@@ -7,6 +7,7 @@ import { MangaDetail } from './components/MangaDetail.tsx'
 import { ScrollToTop } from './components/ScrollToTop.tsx'
 import { LibraryProvider } from './components/LibraryProvider.tsx'
 import { NotFound } from './components/NotFound.tsx'
+import { ErrorBoundary } from './components/ErrorBoundary.tsx'
 
 export default function App() {
   return (
@@ -15,12 +16,14 @@ export default function App() {
         <ScrollToTop />
         <Header />
         <main tabIndex={-1}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/library" element={<LibraryPage />} />
-            <Route path="/:slug" element={<MangaDetail />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <ErrorBoundary>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/library" element={<LibraryPage />} />
+              <Route path="/:slug" element={<MangaDetail />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </ErrorBoundary>
         </main>
         <Footer />
       </div>

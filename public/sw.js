@@ -32,9 +32,17 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(request)
         .then((response) => {
+          if (!response.ok) return response
           const copy = response.clone()
-          caches.open(CACHE).then((cache) => cache.put('/index.html', copy))
-          return response
+          // A cache-write failure must not replace a successful response:
+          // isolate it, still return the live response.
+          return caches
+            .open(CACHE)
+            .then((cache) => cache.put('/index.html', copy))
+            .catch(() => {
+              /* offline cache is best-effort; the network response wins. */
+            })
+            .then(() => response)
         })
         .catch(() =>
           caches
