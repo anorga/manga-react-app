@@ -1,6 +1,6 @@
 import { useMemo, useState, type ReactNode } from 'react'
 import { LibraryContext } from '../library-context'
-import { createLibraryEntry, loadLibrary, persistLibrary, type ReadingStatus } from '../library'
+import { clampChapter, createLibraryEntry, loadLibrary, persistLibrary, type ReadingStatus } from '../library'
 
 export function LibraryProvider({ children }: { children: ReactNode }) {
   const [entries, setEntries] = useState(loadLibrary)
@@ -22,14 +22,20 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
         delete next[slug]
         commit(next)
       },
-      update(slug: string, changes: { currentChapter?: number; status?: ReadingStatus }) {
+      update(slug: string, changes: { currentChapter?: number; status?: ReadingStatus }, limits?: { chapterTotal?: number }) {
         const current = entries[slug] ?? createLibraryEntry(slug)
+        let currentChapter = current.currentChapter
+        if (changes.currentChapter !== undefined) {
+          currentChapter = limits?.chapterTotal !== undefined
+            ? clampChapter(changes.currentChapter, limits.chapterTotal)
+            : Math.max(0, Math.floor(changes.currentChapter))
+        }
         commit({
           ...entries,
           [slug]: {
             ...current,
             ...changes,
-            currentChapter: Math.max(0, Math.floor(changes.currentChapter ?? current.currentChapter)),
+            currentChapter,
             updatedAt: new Date().toISOString(),
           },
         })

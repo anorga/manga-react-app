@@ -52,7 +52,14 @@ export function MangaDetail() {
             <select
               id="reading-status"
               value={entry?.status ?? 'want-to-read'}
-              onChange={(event) => setStatus(title.slug, event.target.value as ReadingStatus)}
+              onChange={(event) => {
+                const status = event.target.value as ReadingStatus
+                if (status === 'completed') {
+                  update(title.slug, { status, currentChapter: title.chapters }, { chapterTotal: title.chapters })
+                } else {
+                  setStatus(title.slug, status)
+                }
+              }}
             >
               <option value="want-to-read">Want to read</option>
               <option value="reading">Reading</option>
@@ -64,18 +71,18 @@ export function MangaDetail() {
           <div className="tracker-card">
             <label htmlFor="current-chapter">Current chapter</label>
             <div className="chapter-stepper">
-              <button aria-label="Previous chapter" onClick={() => update(title.slug, { currentChapter: currentChapter - 1, status: 'reading' })}>−</button>
+              <button aria-label="Previous chapter" onClick={() => update(title.slug, { currentChapter: currentChapter - 1, status: 'reading' }, { chapterTotal: title.chapters })}>−</button>
               <input
                 id="current-chapter"
                 type="number"
                 min="0"
                 max={title.chapters}
                 value={currentChapter}
-                onChange={(event) => update(title.slug, { currentChapter: Number(event.target.value), status: 'reading' })}
+                onChange={(event) => update(title.slug, { currentChapter: Number(event.target.value), status: 'reading' }, { chapterTotal: title.chapters })}
               />
-              <button aria-label="Next chapter" onClick={() => update(title.slug, { currentChapter: currentChapter + 1, status: 'reading' })}>+</button>
+              <button aria-label="Next chapter" onClick={() => update(title.slug, { currentChapter: currentChapter + 1, status: 'reading' }, { chapterTotal: title.chapters })}>+</button>
             </div>
-            <div className="progress" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
+            <div className="progress" role="progressbar" aria-label={`Reading progress for ${title.title}`} aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-valuetext={`Chapter ${currentChapter} of ${title.chapters}`}>
               <span style={{ width: `${pct}%` }} />
             </div>
             <p>{currentChapter} of {title.chapters} chapters · {pct}% complete</p>

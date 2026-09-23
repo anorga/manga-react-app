@@ -20,4 +20,14 @@ describe('manga catalog', () => {
       expect(item.year).toBeGreaterThan(1950)
     })
   })
+
+  it('contains the 12-title catalog with verified catalog facts', () => {
+    expect(manga).toHaveLength(12)
+    expect(new Set(manga.map((item) => item.slug)).size).toBe(12)
+
+    // Lock in the verified catalog facts so they cannot silently regress.
+    expect(getMangaBySlug('attack')?.chapters).toBe(139) // final serialized chapter
+    expect(getMangaBySlug('vinland')?.publisher).toBe('Kodansha') // English publisher
+    expect(getMangaBySlug('drstone')?.author).toContain('Inagaki') // correct author spelling
+  })
 })
