@@ -41,7 +41,6 @@ export type Manga = {
   endYear?: number
   chapters: number
   rating: number
-  apiId?: string
 }
 
 const VIZ = 'https://www.viz.com/manga-books'
@@ -234,7 +233,7 @@ export const manga: Manga[] = [
   {
     slug: 'drstone',
     title: 'Dr. Stone',
-    description: 'When all of humanity turns to stone, genius scientist-genius Ishigami works to rebuild civilization from scratch using science and sheer will.',
+    description: 'When all of humanity turns to stone, genius scientist Senku Ishigami works to rebuild civilization from scratch using science and sheer will.',
     status: 'Completed',
     genres: ['Adventure', 'Sci-Fi'],
     cover: drStoneCover,
