@@ -17,7 +17,7 @@ A mobile-first manga discovery and reading tracker with a curated library of 12 
 
 ## Catalog data
 
-The catalog is local and typed in `src/data.ts`. Each title includes an optional `apiId` field so a future manga API can be connected without changing the reading-library schema. User progress remains local and independent from the catalog provider.
+The catalog is local and typed in `src/data.ts` — title facts (chapters, status, years) are hand-audited. User progress remains local and independent from any catalog provider.
 
 ## Local development
 

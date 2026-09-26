@@ -113,7 +113,11 @@ main { flex: 1; }
 .back-link:hover { color: var(--paper); }
 .detail-hero { min-height: 530px; position: relative; display: flex; align-items: end; overflow: hidden; background: var(--surface); }
 .detail-hero > img, .detail-shade { position: absolute; inset: 0; width: 100%; height: 100%; }
-.detail-hero > img { object-fit: cover; }
+/* Banners are short promo strips (~5:1). Cover-fitting one into a 530px hero
+   upscales it ~2x — visible smear. Instead: a blurred, cover-scaled copy
+   fills the hero, and the banner itself sits sharp across the full width. */
+.detail-hero-fill { object-fit: cover; filter: blur(46px) saturate(1.25) brightness(.45); transform: scale(1.25); }
+.detail-hero-strip { top: 0; bottom: auto; height: auto; object-fit: contain; -webkit-mask-image: linear-gradient(to bottom, transparent, black 22%, black 55%, transparent); mask-image: linear-gradient(to bottom, transparent, black 22%, black 55%, transparent); }
 .detail-shade { background: linear-gradient(90deg, rgba(12,10,9,.96) 0%, rgba(12,10,9,.62) 48%, rgba(12,10,9,.16) 100%), linear-gradient(0deg, rgba(12,10,9,.75), transparent 55%); }
 .detail-copy { position: relative; z-index: 1; width: 100%; min-width: 0; max-width: 650px; padding: clamp(30px, 7vw, 80px); }
 .detail-copy h1 { margin: 18px 0 22px; font-size: clamp(2.5rem, 8vw, 7rem); font-weight: 600; line-height: 1.05; letter-spacing: -.07em; overflow-wrap: anywhere; }
@@ -237,8 +241,11 @@ main { flex: 1; }
   .continue-list { grid-template-columns: 1fr; }
   .detail-page { width: min(1180px, calc(100% - 32px)); padding-top: 24px; }
   .back-link { margin-left: 0; }
-  .detail-hero { min-height: 0; }
-  .detail-copy { padding: 32px 20px; }
+  .detail-hero { min-height: 0; display: block; margin-inline: -16px; }
+  /* Phone: banners are 5:1 — a floated strip covers only ~70px. Put a sharp
+     center-crop of the banner in flow so the hero actually reads as image. */
+  .detail-hero > .detail-hero-strip { position: relative; top: auto; bottom: auto; height: clamp(210px, 60vw, 300px); object-fit: cover; -webkit-mask-image: linear-gradient(to bottom, black 62%, transparent); mask-image: linear-gradient(to bottom, black 62%, transparent); }
+  .detail-copy { padding: 10px 20px 36px; }
   .detail-shade { background: linear-gradient(0deg, rgba(12, 10, 9, .96) 0%, rgba(12, 10, 9, .82) 65%, rgba(12, 10, 9, .62) 100%); }
   .tracker-section { padding-inline: 0; margin-top: 48px; }
   .detail-stats { gap: 22px; }

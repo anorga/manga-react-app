@@ -27,7 +27,8 @@ export function MangaDetail() {
     <article className="detail-page page-width" style={{ '--accent': title.accent } as React.CSSProperties}>
       <Link className="back-link" to="/">← Back to library</Link>
       <section className="detail-hero">
-        <img src={title.banner} alt="" fetchPriority="high" decoding="async" />
+        <img className="detail-hero-fill" src={title.banner} alt="" aria-hidden="true" decoding="async" />
+        <img className="detail-hero-strip" src={title.banner} alt="" fetchPriority="high" decoding="async" />
         <div className="detail-shade" />
         <div className="detail-copy">
           <div className="genre-list">{title.genres.map((genre) => <span key={genre}>{genre}</span>)}</div>
