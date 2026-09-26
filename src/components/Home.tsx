@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { allGenres, manga } from '../data'
 import { useLibrary } from '../hooks/useLibrary'
 import { usePageMeta } from '../hooks/usePageMeta'
+import { useJsonLd } from '../hooks/useJsonLd'
+import { websiteSchema } from '../lib/seo'
 
 type Shelf = 'all' | 'saved' | 'reading'
 type Sort = 'featured' | 'rating' | 'newest' | 'az'
@@ -19,6 +21,7 @@ export function Home() {
   const [sort, setSort] = useState<Sort>('featured')
   const { entries, remove, save } = useLibrary()
   usePageMeta('Read Manga', 'Discover manga, save titles, and track your reading progress locally.')
+  useJsonLd(websiteSchema)
   const deferredQuery = useDeferredValue(query.trim().toLowerCase())
 
   const continueReading = useMemo(

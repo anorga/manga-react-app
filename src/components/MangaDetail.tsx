@@ -1,7 +1,10 @@
+import { useMemo } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getMangaBySlug, manga } from '../data'
 import { useLibrary } from '../hooks/useLibrary'
 import { usePageMeta } from '../hooks/usePageMeta'
+import { useJsonLd } from '../hooks/useJsonLd'
+import { bookSchema } from '../lib/seo'
 import type { ReadingStatus } from '../library'
 import { NotFound } from './NotFound'
 
@@ -10,6 +13,7 @@ export function MangaDetail() {
   const title = getMangaBySlug(slug)
   const { entries, remove, save, setStatus, update } = useLibrary()
   usePageMeta(title?.title ?? 'Page not found', title?.description ?? 'The requested title is not in this collection.', title ? `/${title.slug}` : '/404')
+  useJsonLd(useMemo(() => (title ? bookSchema(title) : null), [title]))
 
   if (!title) return <NotFound />
 
