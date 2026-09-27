@@ -99,7 +99,7 @@ describe('time capsule UI', () => {
   })
 })
 
-describe('capsule provider serialization', () => {
+describe('capsule provider sequential writes', () => {
   const make = (slug: string) => ({
     id: slug, slug, writtenAtChapter: 1, unlockAtChapter: 2,
     body: slug, createdAt: '2026-01-01T00:00:00.000Z', openedAt: null,
@@ -129,7 +129,7 @@ describe('capsule provider serialization', () => {
     cleanup()
   })
 
-  it('keeps a note sealed by another tab (two providers, shared storage)', () => {
+  it('preserves an earlier persisted seal before its storage event arrives', () => {
     let tabA: ReturnType<typeof useCapsules>
     let tabB: ReturnType<typeof useCapsules>
     function TabA() { tabA = useCapsules(); return null }
@@ -244,6 +244,100 @@ describe('capsule failure paths', () => {
     expect(result).toMatchObject({ ok: false })
     expect(localStorage.getItem(CAPSULE_STORAGE_KEY)).toBeNull() // nothing was written
     restore()
+    cleanup()
+  })
+})
+
+describe('capsule provider cross-tab events', () => {
+  let api: ReturnType<typeof useCapsules> | undefined
+
+  function Probe() {
+    api = useCapsules()
+    return null
+  }
+
+  function mountProbe() {
+    render(
+      <LibraryProvider>
+        <CapsuleProvider>
+          <Probe />
+        </CapsuleProvider>
+      </LibraryProvider>,
+    )
+  }
+
+  function fireStorageEvent(key: string | null) {
+    act(() => {
+      window.dispatchEvent(new StorageEvent('storage', { key, storageArea: localStorage }))
+    })
+  }
+
+  it('adapts to a full storage clear (key === null)', () => {
+    seedCapsule({
+      version: 1,
+      bySlug: {
+        onepunch: {
+          id: 'p', slug: 'onepunch', writtenAtChapter: 1, unlockAtChapter: 2,
+          body: 'note', createdAt: '2026-01-01T00:00:00.000Z', openedAt: null,
+        },
+      },
+    })
+    mountProbe()
+    expect(api!.store.bySlug.onepunch).toBeDefined()
+    localStorage.clear()
+    fireStorageEvent(null)
+    expect(api!.store.bySlug).toEqual({})
+    cleanup()
+  })
+
+  it('ignores storage events for unrelated keys', () => {
+    seedCapsule({
+      version: 1,
+      bySlug: {
+        onepunch: {
+          id: 'p', slug: 'onepunch', writtenAtChapter: 1, unlockAtChapter: 2,
+          body: 'note', createdAt: '2026-01-01T00:00:00.000Z', openedAt: null,
+        },
+      },
+    })
+    mountProbe()
+    act(() => {
+      window.dispatchEvent(new StorageEvent('storage', { key: 'some-other-app', storageArea: localStorage }))
+    })
+    expect(api!.store.bySlug.onepunch).toBeDefined()
+    cleanup()
+  })
+
+  it('retains the draft in the form after a failed seal and a storage event', () => {
+    seedLibrary()
+    const real = window.localStorage
+    const data: Record<string, string> = {}
+    for (let i = 0; i < real.length; i++) {
+      const k = real.key(i)!
+      data[k] = real.getItem(k)!
+    }
+    const mock: Storage = {
+      getItem: (k: string) => (k in data ? data[k] : null),
+      setItem(k: string, v: string) {
+        if (k === CAPSULE_STORAGE_KEY) throw new Error('QuotaExceededError')
+        data[k] = String(v)
+      },
+      removeItem(k: string) { delete data[k] },
+      clear() { for (const k of Object.keys(data)) delete data[k] },
+      key(i: number) { return Object.keys(data)[i] ?? null },
+      get length() { return Object.keys(data).length },
+    }
+    vi.stubGlobal('localStorage', mock)
+    renderDetail()
+    fireEvent.change(screen.getByRole('spinbutton', { name: 'Reveal at chapter' }), { target: { value: '60' } })
+    fireEvent.change(screen.getByLabelText('Your note'), { target: { value: 'keep me' } })
+    fireEvent.submit(screen.getByRole('button', { name: /Seal note/i }).closest('form')!)
+    // The provider reloads on a storage event; the unsubmitted draft survives.
+    fireStorageEvent(CAPSULE_STORAGE_KEY)
+    expect(screen.getByRole('alert')).toHaveTextContent(/could not save to this device/i)
+    expect(screen.getByLabelText('Your note')).toHaveValue('keep me')
+    expect(localStorage.getItem(CAPSULE_STORAGE_KEY)).toBeNull()
+    vi.unstubAllGlobals()
     cleanup()
   })
 })
