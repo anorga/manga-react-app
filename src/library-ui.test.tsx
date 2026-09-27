@@ -5,6 +5,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { Home } from './components/Home'
 import { LibraryPage } from './components/LibraryPage'
 import { LibraryProvider } from './components/LibraryProvider'
+import { CapsuleProvider } from './components/CapsuleProvider'
 import { MangaDetail } from './components/MangaDetail'
 import { manga } from './data'
 import { createLibraryEntry, LIBRARY_STORAGE_KEY, normalizeChapter, type LibraryState } from './library'
@@ -28,11 +29,13 @@ function renderWithLibrary(ui: React.ReactElement, { route = '/' } = {}) {
   return render(
     <MemoryRouter initialEntries={[route]}>
       <LibraryProvider>
-        <Routes>
-          <Route path="/" element={ui} />
-          <Route path="/library" element={ui} />
-          <Route path="/:slug" element={ui} />
-        </Routes>
+        <CapsuleProvider>
+          <Routes>
+            <Route path="/" element={ui} />
+            <Route path="/library" element={ui} />
+            <Route path="/:slug" element={ui} />
+          </Routes>
+        </CapsuleProvider>
       </LibraryProvider>
     </MemoryRouter>,
   )

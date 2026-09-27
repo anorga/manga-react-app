@@ -2,6 +2,7 @@ import { cleanup, render } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { LibraryProvider } from './components/LibraryProvider'
+import { CapsuleProvider } from './components/CapsuleProvider'
 import { MangaDetail } from './components/MangaDetail'
 import { Home } from './components/Home'
 import { manga } from './data'
@@ -40,9 +41,11 @@ describe('JSON-LD injection', () => {
     render(
       <MemoryRouter initialEntries={['/chainsaw']}>
         <LibraryProvider>
-          <Routes>
-            <Route path="/:slug" element={<MangaDetail />} />
-          </Routes>
+          <CapsuleProvider>
+            <Routes>
+              <Route path="/:slug" element={<MangaDetail />} />
+            </Routes>
+          </CapsuleProvider>
         </LibraryProvider>
       </MemoryRouter>
     )
@@ -71,9 +74,11 @@ describe('JSON-LD injection', () => {
     const view = render(
       <MemoryRouter initialEntries={['/chainsaw']}>
         <LibraryProvider>
-          <Routes>
-            <Route path="/:slug" element={<MangaDetail />} />
-          </Routes>
+          <CapsuleProvider>
+            <Routes>
+              <Route path="/:slug" element={<MangaDetail />} />
+            </Routes>
+          </CapsuleProvider>
         </LibraryProvider>
       </MemoryRouter>
     )
