@@ -10,7 +10,7 @@ import type { ReadingStatus } from '../library'
 const emptyCopy = 'Your library is empty. Browse the collection and save the titles you want to follow.'
 
 export function LibraryPage() {
-  const { entries, remove, setStatus, update } = useLibrary()
+  const { entries, remove, setStatus, update, persistFailed } = useLibrary()
   usePageMeta('My library', 'Your personal manga library, stored privately in this browser.')
 
   const saved = manga
@@ -33,6 +33,11 @@ export function LibraryPage() {
   if (saved.length === 0) {
     return (
       <section className="page-width library-empty">
+        {persistFailed ? (
+          <p className="tracker-warn" role="alert">
+            Could not save your library to this device — changes are kept for this session only.
+          </p>
+        ) : null}
         <p className="eyebrow">My library</p>
         <h1>Nothing saved yet</h1>
         <p className="hero-copy">{emptyCopy}</p>
@@ -56,6 +61,11 @@ export function LibraryPage() {
 
   return (
     <section className="page-width library-page">
+      {persistFailed ? (
+        <p className="tracker-warn" role="alert">
+          Could not save your library to this device — changes are kept for this session only.
+        </p>
+      ) : null}
       <div className="library-head">
         <div>
           <p className="eyebrow">My library</p>

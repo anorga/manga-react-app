@@ -1,6 +1,6 @@
 import { cleanup, fireEvent, render, screen, act } from '@testing-library/react'
 import { StrictMode } from 'react'
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import '@testing-library/jest-dom/vitest'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { CapsuleProvider } from './components/CapsuleProvider'
@@ -100,6 +100,11 @@ describe('time capsule UI', () => {
 })
 
 describe('capsule provider serialization', () => {
+  const make = (slug: string) => ({
+    id: slug, slug, writtenAtChapter: 1, unlockAtChapter: 2,
+    body: slug, createdAt: '2026-01-01T00:00:00.000Z', openedAt: null,
+  })
+
   it('keeps both notes when two seals land in the same React batch', async () => {
     let api: ReturnType<typeof useCapsules>
     function Probe() {
@@ -115,16 +120,130 @@ describe('capsule provider serialization', () => {
         </LibraryProvider>
       </StrictMode>,
     )
-    const make = (slug: string) => ({
-      id: slug, slug, writtenAtChapter: 1, unlockAtChapter: 2,
-      body: slug, createdAt: '2026-01-01T00:00:00.000Z', openedAt: null,
-    })
     act(() => {
       api!.seal(make('chainsaw'))
       api!.seal(make('naruto'))
     })
     const stored = JSON.parse(localStorage.getItem(CAPSULE_STORAGE_KEY) ?? '{}')
     expect(Object.keys(stored.bySlug)).toEqual(expect.arrayContaining(['chainsaw', 'naruto']))
+    cleanup()
+  })
+
+  it('keeps a note sealed by another tab (two providers, shared storage)', () => {
+    let tabA: ReturnType<typeof useCapsules>
+    let tabB: ReturnType<typeof useCapsules>
+    function TabA() { tabA = useCapsules(); return null }
+    function TabB() { tabB = useCapsules(); return null }
+    render(
+      <LibraryProvider>
+        <CapsuleProvider><TabA /></CapsuleProvider>
+        <CapsuleProvider><TabB /></CapsuleProvider>
+      </LibraryProvider>,
+    )
+    act(() => { tabA!.seal(make('attack')) })
+    // A second tab, whose in-memory store predates the first seal, seals its own note.
+    act(() => { tabB!.seal(make('naruto')) })
+    const stored = JSON.parse(localStorage.getItem(CAPSULE_STORAGE_KEY) ?? '{}')
+    // The other tab's note must survive, not be clobbered by the stale tab's write.
+    expect(Object.keys(stored.bySlug)).toEqual(expect.arrayContaining(['attack', 'naruto']))
+    cleanup()
+  })
+})
+
+describe('capsule failure paths', () => {
+  function Probe() {
+    api = useCapsules()
+    return null
+  }
+  let api: ReturnType<typeof useCapsules> | undefined
+
+  function mountProbe() {
+    render(
+      <LibraryProvider>
+        <CapsuleProvider>
+          <Probe />
+        </CapsuleProvider>
+      </LibraryProvider>,
+    )
+  }
+
+  // happy-dom's localStorage does not route through Storage.prototype, so a
+  // prototype-level spy is invisible to the app. Swap in a key-scoped failing
+  // mock of the global instead, seeded from the current contents.
+  function breakWrites(brokenKey: string) {
+    const real = window.localStorage
+    const data: Record<string, string> = {}
+    for (let i = 0; i < real.length; i++) {
+      const k = real.key(i)!
+      data[k] = real.getItem(k)!
+    }
+    const mock: Storage = {
+      getItem: (k: string) => (k in data ? data[k] : null),
+      setItem(k: string, v: string) {
+        if (k === brokenKey) throw new Error('QuotaExceededError')
+        data[k] = String(v)
+      },
+      removeItem(k: string) { delete data[k] },
+      clear() { for (const k of Object.keys(data)) delete data[k] },
+      key(i: number) { return Object.keys(data)[i] ?? null },
+      get length() { return Object.keys(data).length },
+    }
+    vi.stubGlobal('localStorage', mock)
+    return () => vi.unstubAllGlobals()
+  }
+
+  it('seal: a failed write surfaces an error and the note is not persisted', () => {
+    seedLibrary()
+    const restore = breakWrites(CAPSULE_STORAGE_KEY)
+    renderDetail()
+    fireEvent.change(screen.getByRole('spinbutton', { name: 'Reveal at chapter' }), { target: { value: '60' } })
+    fireEvent.change(screen.getByLabelText('Your note'), { target: { value: 'will be lost' } })
+    fireEvent.submit(screen.getByRole('button', { name: /Seal note/i }).closest('form')!)
+
+    expect(screen.getByRole('alert')).toHaveTextContent(/could not save to this device/i)
+    expect(localStorage.getItem(CAPSULE_STORAGE_KEY)).toBeNull() // nothing was written
+    // The draft is retained in the textarea.
+    expect(screen.getByLabelText('Your note')).toHaveValue('will be lost')
+    restore()
+    cleanup()
+  })
+
+  it('open: a failed write surfaces an error and the note stays sealed', () => {
+    seedLibrary({ currentChapter: 60 })
+    seedCapsule({
+      version: 1,
+      bySlug: {
+        chainsaw: {
+          id: 'c', slug: 'chainsaw', writtenAtChapter: 30, unlockAtChapter: 60,
+          body: 'the devil wins', createdAt: '2026-01-01T00:00:00.000Z', openedAt: null,
+        },
+      },
+    })
+    const restore = breakWrites(CAPSULE_STORAGE_KEY)
+    renderDetail()
+    fireEvent.click(screen.getByRole('button', { name: /Open note/i }))
+
+    expect(screen.getByRole('alert')).toHaveTextContent(/could not save to this device/i)
+    expect(JSON.parse(localStorage.getItem(CAPSULE_STORAGE_KEY) ?? '{}').bySlug.chainsaw.openedAt).toBeNull()
+    restore()
+    cleanup()
+  })
+
+  it('importNow: a failed write is rejected and storage is unchanged', () => {
+    mountProbe()
+    const restore = breakWrites(CAPSULE_STORAGE_KEY)
+    const result = api!.importNow(JSON.stringify({
+      version: 1,
+      bySlug: {
+        onepunch: {
+          id: 'p', slug: 'onepunch', writtenAtChapter: 1, unlockAtChapter: 2,
+          body: 'imported note', createdAt: '2026-01-01T00:00:00.000Z', openedAt: null,
+        },
+      },
+    }))
+    expect(result).toMatchObject({ ok: false })
+    expect(localStorage.getItem(CAPSULE_STORAGE_KEY)).toBeNull() // nothing was written
+    restore()
     cleanup()
   })
 })

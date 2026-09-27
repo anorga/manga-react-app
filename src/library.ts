@@ -19,11 +19,13 @@ export function loadLibrary(): LibraryState {
   }
 }
 
-export function persistLibrary(state: LibraryState) {
+/** Returns whether the write reached storage; a false result means the caller must tell the user their data is in-memory only. */
+export function persistLibrary(state: LibraryState): boolean {
   try {
     localStorage.setItem(LIBRARY_STORAGE_KEY, JSON.stringify(state))
+    return true
   } catch {
-    // The tracker still works for the current session when storage is unavailable.
+    return false
   }
 }
 

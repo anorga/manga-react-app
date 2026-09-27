@@ -12,7 +12,7 @@ import { NotFound } from './NotFound'
 export function MangaDetail() {
   const { slug } = useParams()
   const title = getMangaBySlug(slug)
-  const { entries, remove, save, setStatus, update } = useLibrary()
+  const { entries, remove, save, setStatus, update, persistFailed } = useLibrary()
   usePageMeta(title?.title ?? 'Page not found', title?.description ?? 'The requested title is not in this collection.', title ? `/${title.slug}` : '/404')
   useJsonLd(useMemo(() => (title ? bookSchema(title) : null), [title]))
 
@@ -53,9 +53,15 @@ export function MangaDetail() {
         <div className="tracker-intro">
           <div><p className="eyebrow">Private reading tracker</p><h2>Keep your place</h2></div>
           <button className={`save-pill ${entry ? 'saved' : ''}`} onClick={() => entry ? remove(title.slug) : save(title.slug)}>
-            {entry ? '✓ Saved to library' : '+ Add to library'}
+            {entry ? (persistFailed ? '✓ In library — not saved' : '✓ Saved to library') : '+ Add to library'}
           </button>
         </div>
+
+        {persistFailed ? (
+          <p className="tracker-warn" role="alert">
+            Could not save your progress to this device — changes are kept for this session only and will be lost if you close the page.
+          </p>
+        ) : null}
 
         <div className="tracker-grid">
           <div className="tracker-card">
