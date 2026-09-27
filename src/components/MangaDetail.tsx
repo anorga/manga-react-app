@@ -6,6 +6,7 @@ import { usePageMeta } from '../hooks/usePageMeta'
 import { useJsonLd } from '../hooks/useJsonLd'
 import { bookSchema } from '../lib/seo'
 import type { ReadingStatus } from '../library'
+import { TimeCapsule } from './TimeCapsule'
 import { NotFound } from './NotFound'
 
 export function MangaDetail() {
@@ -98,6 +99,10 @@ export function MangaDetail() {
             </div>
             <p>{progressText}</p>
           </div>
+        </div>
+
+        <div className="capsule-card">
+          <TimeCapsule key={title.slug} title={title} />
         </div>
 
         <div className="official-source">

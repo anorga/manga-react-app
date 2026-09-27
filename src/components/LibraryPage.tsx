@@ -2,6 +2,9 @@ import { Link } from 'react-router-dom'
 import { manga } from '../data'
 import { useLibrary } from '../hooks/useLibrary'
 import { usePageMeta } from '../hooks/usePageMeta'
+import { useCapsules } from '../hooks/useCapsules'
+import { capsuleState } from '../capsules'
+import { CapsuleBackup } from './CapsuleBackup'
 import type { ReadingStatus } from '../library'
 
 const emptyCopy = 'Your library is empty. Browse the collection and save the titles you want to follow.'
@@ -21,6 +24,12 @@ export function LibraryPage() {
   const chaptersRead = saved.reduce((sum, pair) => sum + (pair.item.status === 'Completed' ? Math.min(pair.entry.currentChapter, pair.item.chapters) : pair.entry.currentChapter), 0)
   const topGenres = topOf(saved.flatMap((pair) => pair.item.genres))
 
+  // Capsule notes are kept even after a title is removed from the library.
+  const { store: capsuleStore } = useCapsules()
+  const readyCapsules = manga
+    .map((item) => ({ item, capsule: capsuleStore.bySlug[item.slug] }))
+    .filter(({ item, capsule }) => capsule && capsuleState(capsule, entries[item.slug]?.currentChapter) === 'ready')
+
   if (saved.length === 0) {
     return (
       <section className="page-width library-empty">
@@ -28,6 +37,19 @@ export function LibraryPage() {
         <h1>Nothing saved yet</h1>
         <p className="hero-copy">{emptyCopy}</p>
         <Link className="primary-button" to="/">Browse the collection <span aria-hidden="true">→</span></Link>
+        {readyCapsules.length > 0 ? (
+          <div className="capsule-ready-list">
+            <p className="eyebrow">Time capsules ready</p>
+            <ul>
+              {readyCapsules.map(({ item }) => (
+                <li key={item.slug}>
+                  <Link to={`/${item.slug}`}>{item.title} <span aria-hidden="true">→</span></Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+        <CapsuleBackup />
       </section>
     )
   }
@@ -67,6 +89,9 @@ export function LibraryPage() {
                   <span style={{ width: `${pct}%` }} />
                 </div>
                 <div className="library-controls">
+                  {capsuleState(capsuleStore.bySlug[item.slug], entry.currentChapter) === 'ready' ? (
+                    <Link className="capsule-ready-badge" to={`/${item.slug}`}>Note ready <span aria-hidden="true">✦</span></Link>
+                  ) : null}
                   <select
                     value={entry.status}
                     onChange={(event) => {
@@ -104,6 +129,11 @@ export function LibraryPage() {
       {saved.length > 0 && reading === 0 ? (
         <p className="library-hint">Tip: set a title to “Reading” and advance the chapter to build your progress stats.</p>
       ) : null}
+
+      <div className="capsule-backup-section">
+        <p className="eyebrow">Time capsule backup</p>
+        <CapsuleBackup />
+      </div>
     </section>
   )
 }

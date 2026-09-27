@@ -1,9 +1,16 @@
 /* Minimal offline-capable service worker for Read Manga.
  * - Network-first for navigations (so new Vercel deploys win immediately), falling back to cache when offline.
  * - Cache-first for hashed static assets (immutable), falling back to network.
+ *
+ * BUILD_ID and BUILD_ASSETS are placeholders for development. The Vite build
+ * (see vite.config.ts) rewrites dist/sw.js to a build-specific ID and the
+ * actual hashed shell assets, so each deploy gets its own cache and precaches
+ * the JS/CSS it actually ships.
  */
-const CACHE = 'read-manga-v1'
-const PRECACHE = ['/', '/index.html', '/manifest.json']
+const BUILD_ID = "dev"
+const BUILD_ASSETS = []
+const CACHE = 'read-manga-' + BUILD_ID
+const PRECACHE = ['/', '/index.html', '/manifest.json', ...BUILD_ASSETS]
 
 self.addEventListener('install', (event) => {
   event.waitUntil(

@@ -6,12 +6,14 @@ import { LibraryPage } from './components/LibraryPage.tsx'
 import { MangaDetail } from './components/MangaDetail.tsx'
 import { ScrollToTop } from './components/ScrollToTop.tsx'
 import { LibraryProvider } from './components/LibraryProvider.tsx'
+import { CapsuleProvider } from './components/CapsuleProvider.tsx'
 import { NotFound } from './components/NotFound.tsx'
 import { ErrorBoundary } from './components/ErrorBoundary.tsx'
 
 export default function App() {
   return (
     <LibraryProvider>
+      <CapsuleProvider>
       <div className="app-shell">
         <ScrollToTop />
         <Header />
@@ -27,6 +29,7 @@ export default function App() {
         </main>
         <Footer />
       </div>
+      </CapsuleProvider>
     </LibraryProvider>
   )
 }
