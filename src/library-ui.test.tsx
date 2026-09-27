@@ -1,5 +1,5 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { cleanup, fireEvent, render, screen, act } from '@testing-library/react'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import '@testing-library/jest-dom/vitest'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { Home } from './components/Home'
@@ -7,6 +7,7 @@ import { LibraryPage } from './components/LibraryPage'
 import { LibraryProvider } from './components/LibraryProvider'
 import { CapsuleProvider } from './components/CapsuleProvider'
 import { MangaDetail } from './components/MangaDetail'
+import { useLibrary } from './hooks/useLibrary'
 import { manga } from './data'
 import { createLibraryEntry, LIBRARY_STORAGE_KEY, normalizeChapter, type LibraryState } from './library'
 import { migrateLibrary } from './library-migration'
@@ -201,6 +202,74 @@ describe('library + progress state', () => {
     expect(screen.getByText('3 titles saved')).toBeInTheDocument()
     const stats = document.querySelector('.library-stats')!
     expect(stats.textContent).toContain('119') // 89 + 30 chapters read
+    clear()
+  })
+})
+
+describe('library persistence failures', () => {
+  let api: ReturnType<typeof useLibrary> | undefined
+
+  function Probe() {
+    api = useLibrary()
+    return null
+  }
+
+  beforeEach(() => {
+    cleanup()
+    clear()
+  })
+
+  it('keeps every entry when updates are batched in one React commit', () => {
+    render(
+      <MemoryRouter>
+        <LibraryProvider>
+          <CapsuleProvider>
+            <Probe />
+          </CapsuleProvider>
+        </LibraryProvider>
+      </MemoryRouter>,
+    )
+    act(() => {
+      api!.update('attack', { currentChapter: 10 })
+      api!.update('naruto', { currentChapter: 5 })
+      api!.update('attack', { currentChapter: 99 })
+    })
+    const stored = getStorage()
+    // The middle write must survive the batch (stale-snapshot clobber regression).
+    expect(stored.attack.currentChapter).toBe(99)
+    expect(stored.naruto.currentChapter).toBe(5)
+    clear()
+  })
+
+  it('surfaces a visible warning when a write cannot be persisted', () => {
+    seed({ attack: entry('attack', 'reading', 10) })
+    // Swap in a failing mock of the global localStorage (happy-dom's storage
+    // bypasses Storage.prototype), seeded from the current contents so the
+    // seeded entry still loads but the write under test fails.
+    const real = window.localStorage
+    const data: Record<string, string> = {}
+    for (let i = 0; i < real.length; i++) {
+      const k = real.key(i)!
+      data[k] = real.getItem(k)!
+    }
+    const mock: Storage = {
+      getItem: (k: string) => (k in data ? data[k] : null),
+      setItem(k: string, v: string) {
+        if (k === LIBRARY_STORAGE_KEY) throw new Error('QuotaExceededError')
+        data[k] = String(v)
+      },
+      removeItem(k: string) { delete data[k] },
+      clear() { for (const k of Object.keys(data)) delete data[k] },
+      key(i: number) { return Object.keys(data)[i] ?? null },
+      get length() { return Object.keys(data).length },
+    }
+    vi.stubGlobal('localStorage', mock)
+    renderWithLibrary(<LibraryPage />, { route: '/library' })
+    setChapter(screen.getByRole('spinbutton', { name: 'Current chapter for Attack on Titan' }) as HTMLInputElement, '11')
+    // A failed write must not be reported as saved: a warning is shown instead.
+    expect(screen.getByRole('alert')).toHaveTextContent(/kept for this session/i)
+    expect(getStorage().attack.currentChapter).toBe(10) // unchanged on disk
+    vi.unstubAllGlobals()
     clear()
   })
 })
