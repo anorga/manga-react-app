@@ -1,5 +1,6 @@
-# CI: the same gate we run by hand before every PR — type-check, build,
-# lint (zero warnings), and the full vitest suite. Vercel deploys master.
+# CI: the same gate we run by hand before every PR — build (type-check
+# included), lint (zero warnings), the full vitest suite, service-worker
+# assertions, and a production-browser PWA smoke test. Vercel deploys master.
 name: CI
 
 on:
@@ -7,7 +8,10 @@ on:
     branches: [master, staging]
   pull_request:
 
-# A new PR supersedes any older run for the same commit.
+permissions:
+  contents: read
+
+# A newer run cancels an older run for the same ref.
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -20,14 +24,14 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 26
+          # Match Vercel's default build runtime (24.x is its current default;
+          # no Node pin exists in the repo). Revisit if the project sets a
+          # specific version in Vercel's Build and Deployment settings.
+          node-version: '24'
           cache: npm
 
       - name: Install
         run: npm ci
-
-      - name: Type-check
-        run: npx tsc -b
 
       - name: Build
         run: npm run build
@@ -37,3 +41,41 @@ jobs:
 
       - name: Test
         run: npx vitest run
+
+      - name: Assert emitted service worker
+        run: node scripts/assert-sw.mjs
+
+      # A real browser proves the worker registers, the app works offline, and
+      # a deploy with a new BUILD_ID cleans the old cache. puppeteer-core is
+      # installed per-run (not in package.json) and drives the runner's Chrome.
+      - name: Install browser driver
+        run: npm install --no-save --package-lock=false puppeteer-core@25.12.0
+
+      - name: Production PWA smoke
+        timeout-minutes: 3
+        shell: bash
+        run: |
+          sudo apt-get install -y chromium-browser || sudo apt-get install -y chromium || true
+          export CHROME_PATH="$(command -v chromium-browser || command -v chromium || true)"
+          test -n "$CHROME_PATH"
+
+          node node_modules/vite/bin/vite.js preview \
+            --host 127.0.0.1 --port 4173 --strictPort > /tmp/pwa-preview.log 2>&1 &
+          preview_pid=$!
+          trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
+
+          ready=false
+          for attempt in {1..50}; do
+            if curl --fail --silent http://127.0.0.1:4173/sw.js > /dev/null; then
+              ready=true
+              break
+            fi
+            sleep 0.2
+          done
+
+          if [ "$ready" != true ]; then
+            cat /tmp/pwa-preview.log
+            exit 1
+          fi
+
+          node scripts/pwa-smoke.mjs

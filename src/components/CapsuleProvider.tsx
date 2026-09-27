@@ -5,13 +5,16 @@ import { CAPSULE_STORAGE_KEY, loadCapsules, mergeImported, persistCapsules, type
 const STORAGE_UNAVAILABLE = 'Could not save to this device (storage unavailable).'
 
 /**
- * Capsule writes report their outcome. Every mutation re-reads the persisted
- * store *before* building the next state, so a note sealed in another tab is
- * not clobbered by a later write in this one (and a note sealed here is
- * re-loaded for other tabs via the storage listener below). Each title holds
- * exactly one note, so a same-title write last-wins; notes on other titles
- * are always preserved. A failed write leaves the in-memory store untouched
- * so callers can keep the draft.
+ * Every mutation reads persisted storage immediately before constructing
+ * its write. This preserves changes already present at that read, including
+ * writes whose storage events have not reached this tab.
+ *
+ * The read-modify-write sequence is not atomic across tabs: overlapping
+ * writes can overwrite each other, even when they concern different titles.
+ * Each title stores exactly one note.
+ *
+ * Failed writes return an error and leave provider state unchanged, allowing
+ * callers to retain drafts.
  */
 export function CapsuleProvider({ children }: { children: ReactNode }) {
   const [store, setStore] = useState<CapsuleStore>(loadCapsules)
@@ -48,8 +51,9 @@ export function CapsuleProvider({ children }: { children: ReactNode }) {
     return commit({ ...fresh, bySlug })
   }, [commit])
 
-  // Merge against the latest persisted store at commit time (never a snapshot
-  // captured before an async file read), so a concurrent seal cannot be lost.
+  // Read the persisted base after the async file read has completed.
+  // Includes changes present at this read; overlapping cross-tab writes
+  // remain subject to the same read-modify-write race.
   const importNow = useCallback((raw: string) => {
     const base = loadCapsules()
     const merged = mergeImported(base, raw)
@@ -59,10 +63,13 @@ export function CapsuleProvider({ children }: { children: ReactNode }) {
     return { ok: true, added: merged.added, updated: merged.updated }
   }, [commit])
 
-  // Another tab wrote to the capsule key: re-read so this view catches up.
+  // Another tab changed storage: re-read so this view catches up.
+  // key === null: the other tab cleared ALL storage (our namespaced key
+  // included) — the same re-read applies.
   useEffect(() => {
     const onStorage = (event: StorageEvent) => {
-      if (event.key === CAPSULE_STORAGE_KEY) setStore(loadCapsules())
+      if (event.storageArea !== localStorage) return
+      if (event.key === CAPSULE_STORAGE_KEY || event.key === null) setStore(loadCapsules())
     }
     window.addEventListener('storage', onStorage)
     return () => window.removeEventListener('storage', onStorage)

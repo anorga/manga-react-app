@@ -1,5 +1,5 @@
 import { cleanup, fireEvent, render, screen, act } from '@testing-library/react'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import '@testing-library/jest-dom/vitest'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { Home } from './components/Home'
@@ -208,6 +208,41 @@ describe('library + progress state', () => {
 
 describe('library persistence failures', () => {
   let api: ReturnType<typeof useLibrary> | undefined
+  // Togglable, counted storage mock: setItem fails for the library key only
+  // while `fail` is true, and records every persist attempt.
+  let fail = false
+  let persistCalls = 0
+  let backing: Record<string, string> = {}
+
+  function installMock() {
+    fail = false
+    persistCalls = 0
+    backing = {}
+    const real = window.localStorage
+    for (let i = 0; i < real.length; i++) {
+      const k = real.key(i)!
+      backing[k] = real.getItem(k)!
+    }
+    const mock: Storage = {
+      getItem: (k: string) => (k in backing ? backing[k] : null),
+      setItem(k: string, v: string) {
+        persistCalls += 1
+        if (k === LIBRARY_STORAGE_KEY && fail) throw new Error('QuotaExceededError')
+        backing[k] = String(v)
+      },
+      removeItem(k: string) { delete backing[k] },
+      clear() { backing = {} },
+      key(i: number) { return Object.keys(backing)[i] ?? null },
+      get length() { return Object.keys(backing).length },
+    }
+    vi.stubGlobal('localStorage', mock)
+  }
+
+  function fireStorageEvent(key: string | null) {
+    act(() => {
+      window.dispatchEvent(new StorageEvent('storage', { key, storageArea: localStorage }))
+    })
+  }
 
   function Probe() {
     api = useLibrary()
@@ -217,6 +252,10 @@ describe('library persistence failures', () => {
   beforeEach(() => {
     cleanup()
     clear()
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
   })
 
   it('keeps every entry when updates are batched in one React commit', () => {
@@ -241,35 +280,136 @@ describe('library persistence failures', () => {
     clear()
   })
 
-  it('surfaces a visible warning when a write cannot be persisted', () => {
-    seed({ attack: entry('attack', 'reading', 10) })
-    // Swap in a failing mock of the global localStorage (happy-dom's storage
-    // bypasses Storage.prototype), seeded from the current contents so the
-    // seeded entry still loads but the write under test fails.
-    const real = window.localStorage
-    const data: Record<string, string> = {}
-    for (let i = 0; i < real.length; i++) {
-      const k = real.key(i)!
-      data[k] = real.getItem(k)!
-    }
-    const mock: Storage = {
-      getItem: (k: string) => (k in data ? data[k] : null),
-      setItem(k: string, v: string) {
-        if (k === LIBRARY_STORAGE_KEY) throw new Error('QuotaExceededError')
-        data[k] = String(v)
-      },
-      removeItem(k: string) { delete data[k] },
-      clear() { for (const k of Object.keys(data)) delete data[k] },
-      key(i: number) { return Object.keys(data)[i] ?? null },
-      get length() { return Object.keys(data).length },
-    }
-    vi.stubGlobal('localStorage', mock)
+  it('shows a warning when migration cannot persist', () => {
+    seed({ attack: entry('attack', 'completed', 1) })
+    installMock()
+    fail = true
     renderWithLibrary(<LibraryPage />, { route: '/library' })
-    setChapter(screen.getByRole('spinbutton', { name: 'Current chapter for Attack on Titan' }) as HTMLInputElement, '11')
-    // A failed write must not be reported as saved: a warning is shown instead.
+    // In-memory is healed to the final chapter even though the write failed.
+    expect(screen.getByRole('spinbutton', { name: 'Current chapter for Attack on Titan' })).toHaveValue(139)
+    expect(getStorage().attack.currentChapter).toBe(1)
     expect(screen.getByRole('alert')).toHaveTextContent(/kept for this session/i)
-    expect(getStorage().attack.currentChapter).toBe(10) // unchanged on disk
-    vi.unstubAllGlobals()
+    clear()
+  })
+
+  it('persists a failed migration and clears its warning on later success', () => {
+    seed({ attack: entry('attack', 'completed', 1) })
+    installMock()
+    fail = true
+    renderWithLibrary(<LibraryPage />, { route: '/library' })
+    expect(screen.getByRole('alert')).toBeInTheDocument()
+    fail = false
+    fireEvent.change(screen.getByRole('combobox', { name: 'Status for Attack on Titan' }), { target: { value: 'reading' } })
+    expect(getStorage().attack.currentChapter).toBe(139)
+    expect(getStorage().attack.status).toBe('reading')
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+    clear()
+  })
+
+  it('preserves a remote write that arrived before its storage event', () => {
+    seed({ attack: entry('attack', 'reading', 10) })
+    installMock()
+    render(
+      <MemoryRouter>
+        <LibraryProvider>
+        <CapsuleProvider>
+          <Probe />
+        </CapsuleProvider>
+        </LibraryProvider>
+      </MemoryRouter>,
+    )
+    // Another tab added a note before this tab's storage event arrives.
+    backing[LIBRARY_STORAGE_KEY] = JSON.stringify({
+      attack: entry('attack', 'reading', 10),
+      naruto: entry('naruto', 'reading', 5),
+    })
+    act(() => { api!.update('attack', { currentChapter: 11 }) })
+    // The local edit and the remote write must both survive (no clobber).
+    const stored = getStorage()
+    expect(stored.attack.currentChapter).toBe(11)
+    expect(stored.naruto.currentChapter).toBe(5)
+    clear()
+  })
+
+  it('keeps a failed local edit and a remote write, then retries on the next event', () => {
+    seed({ attack: entry('attack', 'reading', 10) })
+    installMock()
+    render(
+      <MemoryRouter>
+        <LibraryProvider>
+          <CapsuleProvider>
+            <Probe />
+          </CapsuleProvider>
+        </LibraryProvider>
+      </MemoryRouter>,
+    )
+    // Local edit fails to persist.
+    fail = true
+    act(() => { api!.update('attack', { currentChapter: 11 }) })
+    expect(api!.persistFailed).toBe(true)
+    // Another tab writes while local writes still fail.
+    backing[LIBRARY_STORAGE_KEY] = JSON.stringify({
+      attack: entry('attack', 'reading', 10),
+      naruto: entry('naruto', 'reading', 5),
+    })
+    fireStorageEvent(LIBRARY_STORAGE_KEY)
+    // Memory must contain BOTH the unsaved local edit and the remote entry;
+    // the warning stays up while the write is still failing.
+    expect(api!.entries.attack.currentChapter).toBe(11)
+    expect(api!.entries.naruto.currentChapter).toBe(5)
+    expect(api!.persistFailed).toBe(true)
+    // Writes recover: a storage event retries and persists the union.
+    fail = false
+    fireStorageEvent(LIBRARY_STORAGE_KEY)
+    const stored = getStorage()
+    expect(stored.attack.currentChapter).toBe(11)
+    expect(stored.naruto.currentChapter).toBe(5)
+    expect(api!.persistFailed).toBe(false)
+    clear()
+  })
+
+  it('retries a failed deletion and preserves remote entries', () => {
+    seed({ attack: entry('attack', 'reading', 10), naruto: entry('naruto', 'reading', 5) })
+    installMock()
+    render(
+      <MemoryRouter>
+        <LibraryProvider>
+          <CapsuleProvider>
+            <Probe />
+          </CapsuleProvider>
+        </LibraryProvider>
+      </MemoryRouter>,
+    )
+    fail = true
+    act(() => { api!.remove('attack') })
+    // Storage still holds the entry; a retry must delete it, keep the rest.
+    fail = false
+    fireStorageEvent(LIBRARY_STORAGE_KEY)
+    const stored = getStorage()
+    expect(stored.attack).toBeUndefined()
+    expect(stored.naruto.currentChapter).toBe(5)
+    expect(api!.persistFailed).toBe(false)
+    clear()
+  })
+
+  it('a clean storage event only observes, it never writes', () => {
+    seed({ attack: entry('attack', 'reading', 10) })
+    installMock()
+    renderWithLibrary(<LibraryPage />, { route: '/library' })
+    fireStorageEvent(LIBRARY_STORAGE_KEY)
+    const before = persistCalls
+    fireStorageEvent(LIBRARY_STORAGE_KEY)
+    expect(persistCalls).toBe(before) // observation caused no storage write
+    clear()
+  })
+
+  it('adapts to a full storage clear (key === null)', () => {
+    seed({ attack: entry('attack', 'reading', 10) })
+    installMock()
+    renderWithLibrary(<LibraryPage />, { route: '/library' })
+    backing = {} // another tab cleared ALL storage
+    fireStorageEvent(null)
+    expect(getStorage()).toEqual({})
     clear()
   })
 })
