@@ -1,0 +1,39 @@
+# CI: the same gate we run by hand before every PR — type-check, build,
+# lint (zero warnings), and the full vitest suite. Vercel deploys master.
+name: CI
+
+on:
+  push:
+    branches: [master, staging]
+  pull_request:
+
+# A new PR supersedes any older run for the same commit.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Type-check
+        run: npx tsc -b
+
+      - name: Build
+        run: npm run build
+
+      - name: Lint
+        run: npx eslint src --max-warnings=0
+
+      - name: Test
+        run: npx vitest run
